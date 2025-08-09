@@ -178,7 +178,7 @@ export const Form = () => {
 
                 {/* Síntomas */}
                 <div>
-                    <label className="mb-2 block text-sm font-semibold">Síntoma u observación</label>
+                    <label className="mb-2 block text-sm font-semibold"> indique la talla para el uniforme</label>
                     <textarea
                         placeholder="Ingresa el síntoma u observación de forma general"
                         className="block w-full rounded-md border border-gray-300 py-1 px-2 text-gray-500 mb-5"
