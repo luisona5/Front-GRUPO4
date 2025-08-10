@@ -9,7 +9,7 @@ import { toast, ToastContainer } from "react-toastify"
 export const Form = () => {
 
     const [avatar, setAvatar] = useState({
-        image: "https://cdn-icons-png.flaticon.com/512/2138/2138440.png",
+        image: "https://s.france24.com/media/display/6aca8d1a-7783-11ea-9cf2-005056bf87d6/w:1280/p:16x9/WEB%2005ABR%20DEPORTES%20PORTADA%20FOTO.jpg",
         prompt: "",
         loading: false
     })
@@ -35,7 +35,8 @@ export const Form = () => {
         }
         else {
             toast.error("Error al generar la imagen, vuelve a intentarlo dentro de 1 minuto");
-            setAvatar(prev => ({ ...prev, image: "https://cdn-icons-png.flaticon.com/512/2138/2138440.png", loading: false }))
+            setAvatar(prev => ({ ...prev, image: "https://s.france24.com/media/display/6aca8d1a-7783-11ea-9cf2-005056bf87d6/w:1280/p:16x9/WEB%2005ABR%20DEPORTES%20PORTADA%20FOTO.jpg",
+                 loading: false }))
             setValue("avatarMascotaIA", avatar.image)
         }
     }
