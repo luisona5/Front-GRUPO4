@@ -31,12 +31,12 @@ export const Form = ({ studient }) => {
             // data:image/png;base64,iVBORw0KGgjbjgfyvh
             const base64Image = await convertBlobToBase64(blob)
             setAvatar(prev => ({ ...prev, image: imageUrl, loading: false }))
-            setValue("avatarMascotaIA", base64Image)
+            setValue("avatarStudientIA", base64Image)
         }
         else {
             toast.error("Error al generar la imagen, vuelve a intentarlo dentro de 1 minuto");
-            setAvatar(prev => ({ ...prev, image: "https://cdn-icons-png.flaticon.com/512/2138/2138440.png", loading: false }))
-            setValue("avatarMascotaIA", avatar.image)
+            setAvatar(prev => ({ ...prev, image: "https://s.france24.com/media/display/6aca8d1a-7783-11ea-9cf2-005056bf87d6/w:1280/p:16x9/WEB%2005ABR%20DEPORTES%20PORTADA%20FOTO.jpg", loading: false }))
+            setValue("avatarStudientIA", avatar.image)
         }
     }
 
@@ -185,8 +185,8 @@ export const Form = ({ studient }) => {
                         <input
                             type="radio"
                             value="ia"
-                            {...register("imageOption", { required: !patient && "El nombre de la mascota es obligatorio" })}
-                            disabled={patient}
+                            {...register("imageOption", { required: !studient && "El nombre de la mascota es obligatorio" })}
+                            disabled={studient}
                         />
                         Generar con IA
                     </label>
@@ -196,8 +196,8 @@ export const Form = ({ studient }) => {
                         <input
                             type="radio"
                             value="upload"
-                            {...register("imageOption", { required: !patient && "El nombre de la mascota es obligatorio" })}
-                            disabled={patient}
+                            {...register("imageOption", { required: !studient && "El nombre de la mascota es obligatorio" })}
+                            disabled={studient}
                         />
                         Subir Imagen
                     </label>
