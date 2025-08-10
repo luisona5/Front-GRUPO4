@@ -135,6 +135,26 @@ export const Form = () => {
                     />
                     {errors.celularEstudiante && <p className="text-red-800">{errors.celularEstudiante.message}</p>}
                 </div>
+
+                {/* carrera del estudiante */}
+                <div>
+                    <label className="mb-2 block text-sm font-semibold">Carrera</label>
+                    <select
+                        id='carrera'
+                        className='block w-full rounded-md border border-gray-300 py-1 px-2 text-gray-500 mb-5'
+                        {...register("carreraEstudiante", { required: "El campo es obligatorio" })}
+                    >
+                        <option value="">--- Seleccionar ---</option>
+                        <option value="Electromecanica">Electromecanica</option>
+                        <option value="Agua y Saneamiento Ambiental">Agua y Saneamiento Ambiental</option>
+                        <option value="Redes y Telecomunicaciones">Redes y Telecomunicaciones</option>
+                        <option value="Desarrollo de Software">Desarrollo de Software</option>
+                    </select>
+                    {errors.carreraEstudiante && <p className="text-red-800">{errors.carreraEstudiante.message}</p>}
+                </div>
+
+
+
             </fieldset>
 
 
@@ -142,13 +162,13 @@ export const Form = () => {
 
             {/*--------------------------------------------------------------------------------------------------------------*/ }
 
-            {/* Información de la mascota */}
+            {/* Información del deporte */}
             <fieldset className="border-2 border-gray-500 p-6 rounded-lg shadow-lg mt-10">
                 <legend className="text-xl font-bold text-gray-700 bg-gray-200 px-4 py-1 rounded-md">
                     Información del Deporte
                 </legend>
 
-                {/* Nombre de la mascota */}
+                {/* Nombre del deporte */}
                 <div>
                     <label className="mb-2 block text-sm font-semibold">Nombre</label>
                     <input
