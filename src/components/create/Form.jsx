@@ -168,20 +168,25 @@ export const Form = () => {
                     Información del Deporte
                 </legend>
 
-                {/* Nombre del deporte */}
+                {/* Deporte*/}
                 <div>
-                    <label className="mb-2 block text-sm font-semibold">Nombre</label>
-                    <input
-                        type="text"
-                        placeholder="Ingresar nombre"
-                        className="block w-full rounded-md border border-gray-300 py-1 px-2 text-gray-500 mb-5"
-                        {...register("nombreMascota", { required: "El nombre de la mascota es obligatorio" })}
-                    />
-                    {errors.nombreMascota && <p className="text-red-800">{errors.nombreMascota.message}</p>}
+                    <label className="mb-2 block text-sm font-semibold">Disciplina</label>
+                    <select
+                        id='Disciplina'
+                        className='block w-full rounded-md border border-gray-300 py-1 px-2 text-gray-500 mb-5'
+                        {...register("nombre", { required: "Seleccione disciplina" })}
+                    >
+                        <option value="">--- Seleccionar ---</option>
+                        <option value="Futbolball">Futbolball</option>
+                        <option value="Basquetball">Basquetball</option>
+                        <option value="Voleyball">Voleyball</option>
+                        
+                    </select>
+                    {errors.nombre && <p className="text-red-800">{errors.nombre.message}</p>}
                 </div>
 
-                {/* Imagen de la mascota*/}
-                <label className="mb-2 block text-sm font-semibold">Imagen de la mascota</label>
+                {/* Imagen de la disciplina*/}
+                <label className="mb-2 block text-sm font-semibold">Imagen de la Disciplina</label>
                 <div className="flex gap-4 mb-2">
                     {/* Opción: Imagen con IA */}
                     <label className="flex items-center gap-2">
