@@ -142,7 +142,7 @@ export const Form = () => {
                     <select
                         id='carrera'
                         className='block w-full rounded-md border border-gray-300 py-1 px-2 text-gray-500 mb-5'
-                        {...register("carreraEstudiante", { required: "El campo es obligatorio" })}
+                        {...register("carreraEstudiante", { required: "Seleccione una Carrera" })}
                     >
                         <option value="">--- Seleccionar ---</option>
                         <option value="Electromecanica">Electromecanica</option>
