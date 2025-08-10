@@ -42,7 +42,7 @@ export const Form = ({ studient }) => {
 
 
 
-    const registerPatient = async (data) => {
+    const registerStudient = async (data) => {
         /*
         const data = {
             nombre: "Firulais",
@@ -98,7 +98,7 @@ export const Form = ({ studient }) => {
     }, [])
 
     return (
-        <form onSubmit={handleSubmit(registerPatient)}>
+        <form onSubmit={handleSubmit(registerStudient)}>
             <ToastContainer />
 
             {/* Información del propietario */}
@@ -287,7 +287,7 @@ export const Form = ({ studient }) => {
                 type="submit"
                 className="bg-gray-800 w-full p-2 mt-5 text-slate-300 uppercase font-bold rounded-lg 
                 hover:bg-gray-600 cursor-pointer transition-all"
-                value={patient ? "Actualizar" : "Registrar"}
+                value={studient ? "Actualizar" : "Registrar"}
             />
         </form>
 
