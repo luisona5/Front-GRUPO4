@@ -1,12 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState } from "react"
 import useFetch from "../../hooks/useFetch"
 import { useNavigate } from "react-router"
 import { useForm } from "react-hook-form"
-import { generateAvatar, convertBlobToBase64 } from "../../helpers/consultarIA"
+import {generateAvatar,convertBlobToBase64} from "../../helpers/consultarIA"
 import { toast, ToastContainer } from "react-toastify"
 
 
-export const Form = ({ studient }) => {
+export const Form = () => {
 
     const [avatar, setAvatar] = useState({
         image: "https://cdn-icons-png.flaticon.com/512/2138/2138440.png",
@@ -15,7 +15,7 @@ export const Form = ({ studient }) => {
     })
 
     const navigate = useNavigate()
-    const { register, handleSubmit, formState: { errors }, setValue, watch, reset } = useForm()
+    const { register, handleSubmit, formState: { errors }, setValue, watch } = useForm()
     const { fetchDataBackend } = useFetch()
 
 
@@ -28,15 +28,15 @@ export const Form = ({ studient }) => {
         if (blob.type === "image/jpeg") {
             // blob:http://localhost/ea27cc7d-
             const imageUrl = URL.createObjectURL(blob)
-            // data:image/png;base64,iVBORw0KGgjbjgfyvh
-            const base64Image = await convertBlobToBase64(blob)
+            // data:image/png;base64,iVBORw0KGg
+            const base64Image = await convertBlobToBase64(blob)           
             setAvatar(prev => ({ ...prev, image: imageUrl, loading: false }))
-            setValue("avatarStudientIA", base64Image)
+            setValue("avatarMascotaIA", base64Image)
         }
         else {
             toast.error("Error al generar la imagen, vuelve a intentarlo dentro de 1 minuto");
             setAvatar(prev => ({ ...prev, image: "https://cdn-icons-png.flaticon.com/512/2138/2138440.png", loading: false }))
-            setValue("avatarStudientIA", avatar.image)
+            setValue("avatarMascotaIA", avatar.image)
         }
     }
 
@@ -60,43 +60,20 @@ export const Form = ({ studient }) => {
                 formData.append(key, data[key]) // se guardan nombre y edad
             }
         })
-        let url = `${import.meta.env.VITE_BACKEND_URL}estudiante/registro`
+        const url = `${import.meta.env.VITE_BACKEND_URL}/estudiante/registro`
         const storedUser = JSON.parse(localStorage.getItem("auth-token"))
-        const headers = {
-            "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${storedUser.state.token}`
-        }
-
-        let response
-        if (studient?._id) {
-            url = `${import.meta.env.VITE_BACKEND_URL}/estudiante/actualizar/${studient._id}`
-            response = await fetchDataBackend(url, formData, "PUT", headers)
-        }
-        else {
-            response = await fetchDataBackend(url, formData, "POST", headers)
-        }
+        const headers= {
+                "Content-Type": "multipart/form-data",
+                Authorization: `Bearer ${storedUser.state.token}`
+            }
+        
+        const response = await fetchDataBackend(url, formData, "POST", headers)
         if (response) {
             setTimeout(() => {
                 navigate("/dashboard/listar")
             }, 2000);
         }
     }
-
-    useEffect(() => {
-        if (studient) {
-            reset({
-                nombreEstudiante: studient?.nombreEstudiante,
-                apellidoEstudiante: studient?.apellioEstudiante,
-                celularEstudiante: studient?.celularEstudiante,
-                emailEstudiante: studient?.emailEstudiante,
-                carreraEstudiante: studient?.carreraEstudiante,
-                periodoEstudiante: studient?.periodoEstudiante,
-
-                
-            })
-        }
-    }, [])
-
     return (
         <form onSubmit={handleSubmit(registerStudient)}>
             <ToastContainer />
@@ -104,22 +81,24 @@ export const Form = ({ studient }) => {
             {/* Información del propietario */}
             <fieldset className="border-2 border-gray-500 p-6 rounded-lg shadow-lg">
                 <legend className="text-xl font-bold text-gray-700 bg-gray-200 px-4 py-1 rounded-md">
-                    Ingreso de Nuevo estudiante
+                    Información del propietario
                 </legend>
 
-                {/* nombreEstudiante */}
+                {/* Cédula */}
                 <div>
-                    <label className="mb-2 block text-sm font-semibold">Nombre</label>
+                    <label className="mb-2 block text-sm font-semibold">Cédula</label>
                     <div className="flex items-center gap-10 mb-5">
                         <input
-                            type="text"
-                            placeholder="nombre del estudiante"
+                            type="number"
+                            placeholder="Ingresa la cédula"
                             className="block w-full rounded-md border border-gray-300 py-1 px-2 text-gray-500"
-                            {...register("nombreEstudiante", { required: "vampo obligatorio para el registro" })}
+                            {...register("cedulaPropietario", { required: "La cédula es obligatoria" })}
                         />
-                        
+                        <button className="py-1 px-8 bg-gray-600 text-slate-300 border rounded-xl hover:scale-110 duration-300 hover:bg-gray-900 hover:text-white sm:w-80">
+                            Consultar
+                        </button>
                     </div>
-                    {errors.nombreEstudiante && <p className="text-red-800">{errors.nombreEstudiante.message}</p>}
+                    {errors.cedulaPropietario && <p className="text-red-800">{errors.cedulaPropietario.message}</p>}
                 </div>
 
                 {/* Nombre completo */}
@@ -185,8 +164,7 @@ export const Form = ({ studient }) => {
                         <input
                             type="radio"
                             value="ia"
-                            {...register("imageOption", { required: !studient && "El nombre de la mascota es obligatorio" })}
-                            disabled={studient}
+                            {...register("imageOption", { required: "Seleccione una opción" })}
                         />
                         Generar con IA
                     </label>
@@ -196,13 +174,12 @@ export const Form = ({ studient }) => {
                         <input
                             type="radio"
                             value="upload"
-                            {...register("imageOption", { required: !studient && "El nombre de la mascota es obligatorio" })}
-                            disabled={studient}
+                            {...register("imageOption", { required: "Seleccione una opción" })}
                         />
                         Subir Imagen
                     </label>
-                    {errors.imageOption && <p className="text-red-800">{errors.imageOption.message}</p>}
                 </div>
+                {errors.imageOption && <p className="text-red-800">{errors.imageOption.message}</p>}
 
                 {/* Imagen con IA */}
                 {selectedOption === "ia" && (
@@ -225,8 +202,8 @@ export const Form = ({ studient }) => {
                                 {avatar.loading ? "Generando..." : "Generar con IA"}
                             </button>
                         </div>
-                        {avatar.generatedImage && (
-                            <img src={avatar.generatedImage} alt="Avatar IA" width={100} height={100} />
+                        {avatar.image && (
+                            <img src={avatar.image} alt="Avatar IA" width={100} height={100} />
                         )}
                     </div>
                 )}
@@ -287,7 +264,7 @@ export const Form = ({ studient }) => {
                 type="submit"
                 className="bg-gray-800 w-full p-2 mt-5 text-slate-300 uppercase font-bold rounded-lg 
                 hover:bg-gray-600 cursor-pointer transition-all"
-                value={studient ? "Actualizar" : "Registrar"}
+                value="Registrar"
             />
         </form>
 
