@@ -9,7 +9,7 @@ import { toast, ToastContainer } from "react-toastify"
 export const Form = ({ studient }) => {
 
     const [avatar, setAvatar] = useState({
-        image: "https://cdn-icons-png.flaticon.com/512/2138/2138440.png",
+        image: "hhttps://s.france24.com/media/display/6aca8d1a-7783-11ea-9cf2-005056bf87d6/w:1280/p:16x9/WEB%2005ABR%20DEPORTES%20PORTADA%20FOTO.jpg",
         prompt: "",
         loading: false
     })
