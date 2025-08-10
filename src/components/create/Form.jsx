@@ -264,31 +264,32 @@ export const Form = () => {
                     </div>
                 )}
 
-                {/* Tipo de mascota */}
+                {/* Lugar de entrenamiento */}
                 <div>
-                    <label className="mb-2 block text-sm font-semibold">Periodo matriculado</label>
+                    <label className="mb-2 block text-sm font-semibold">Lugar de entrenamiento</label>
                     <select
-                        id='prioridad'
+                        id='lugar'
                         className='block w-full rounded-md border border-gray-300 py-1 px-2 text-gray-500 mb-5'
-                        {...register("tipoMascota", { required: "El tipo de la mascota es obligatorio" })}
+                        {...register("lugar", { required: "Sleccione el lugar de entrenamiento" })}
                     >
                         <option value="">--- Seleccionar ---</option>
-                        <option value="gato">Gato</option>
-                        <option value="perro">Perro</option>
-                        <option value="otro">Otro</option>
+                        <option value="Bombonera">Bombonera-Edificio 21</option>
+                        <option value="Estadio Politecnico">Estadio Politecnico</option>
+                        <option value="Canchas">Canchas</option>
                     </select>
-                    {errors.tipoMascota && <p className="text-red-800">{errors.tipoMascota.message}</p>}
+                    {errors.lugar && <p className="text-red-800">{errors.lugar.message}</p>}
                 </div>
 
-                {/* Fecha de nacimiento */}
+                {/* Horario de entrenamiento */}
                 <div>
-                    <label className="mb-2 block text-sm font-semibold">Fecha de nacimiento</label>
+                    <label className="mb-2 block text-sm font-semibold">Horario de entrenamiento</label>
                     <input
-                        type="date"
+                        type="text"
+                        placeholder="indique horario de disposicion"
                         className="block w-full rounded-md border border-gray-300 py-1 px-2 text-gray-500 mb-5"
-                        {...register("fechaNacimientoMascota", { required: "La fecha de nacimiento de la mascota es obligatorio" })}
+                        {...register("horario", { required: "disponiblilidad para entrenar Obligatorio" })}
                     />
-                    {errors.fechaNacimientoMascota && <p className="text-red-800">{errors.fechaNacimientoMascota.message}</p>}
+                    {errors.horario && <p className="text-red-800">{errors.horario.message}</p>}
                 </div>
 
                 {/* Síntomas */}
