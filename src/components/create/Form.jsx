@@ -91,7 +91,7 @@ export const Form = () => {
                     <div className="flex items-center gap-10 mb-5">
                         <input
                             type="text"
-                            placeholder="Ingresa nombre del estudiante"
+                            placeholder="Ingrese nombre del estudiante"
                             className="block w-full rounded-md border border-gray-300 py-1 px-2 text-gray-500"
                             {...register("nombreEstudiante", { required: " Se requiere nombre del estudiante" })}
                         />
@@ -105,7 +105,7 @@ export const Form = () => {
                     <label className="mb-2 block text-sm font-semibold">Apellido</label>
                     <input
                         type="text"
-                        placeholder="Ingresa apellido del estudiante"
+                        placeholder="Ingrese apellido del estudiante"
                         className="block w-full rounded-md border border-gray-300 py-1 px-2 text-gray-500 mb-5"
                         {...register("apellidoEstudiante", { required: "Se requiere Apellido del estudiante" })}
                     />
@@ -117,7 +117,7 @@ export const Form = () => {
                     <label className="mb-2 block text-sm font-semibold">Correo electrónico</label>
                     <input
                         type="email"
-                        placeholder="Ingresa el correo electrónico institucional"
+                        placeholder="Ingrese correo electrónico institucional"
                         className="block w-full rounded-md border border-gray-300 py-1 px-2 text-gray-500 mb-5"
                         {...register("emailEstudiante", { required: "El correo electrónico es obligatorio" })}
                     />
@@ -129,7 +129,7 @@ export const Form = () => {
                     <label className="mb-2 block text-sm font-semibold">Celular</label>
                     <input
                         type="number"
-                        placeholder="Ingresa el celular"
+                        placeholder="Ingrese telefono o celular"
                         className="block w-full rounded-md border border-gray-300 py-1 px-2 text-gray-500 mb-5"
                         {...register("celularEstudiante", { required: "El celular es obligatorio" })}
                     />
