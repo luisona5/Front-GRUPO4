@@ -152,6 +152,21 @@ export const Form = () => {
                     </select>
                     {errors.carreraEstudiante && <p className="text-red-800">{errors.carreraEstudiante.message}</p>}
                 </div>
+                <div>
+                    <label className="mb-2 block text-sm font-semibold">Periodo Matriculado </label>
+                    <select
+                        id='periodo'
+                        className='block w-full rounded-md border border-gray-300 py-1 px-2 text-gray-500 mb-5'
+                        {...register("periodoEstudiante", { required: "Campo es obligatorio" })}
+                    >
+                        <option value="">--- Seleccionar ---</option>
+                        <option value="24-A">24-A</option>
+                        <option value="24-B">24-B</option>
+                        <option value="25-A">25-A</option>
+                        <option value="25-B">25-B-</option>
+                    </select>
+                    {errors.periodoEstudiante && <p className="text-red-800">{errors.periodoEstudiante.message}</p>}
+                </div>
 
 
 
@@ -251,7 +266,7 @@ export const Form = () => {
 
                 {/* Tipo de mascota */}
                 <div>
-                    <label className="mb-2 block text-sm font-semibold">Tipo</label>
+                    <label className="mb-2 block text-sm font-semibold">Periodo matriculado</label>
                     <select
                         id='prioridad'
                         className='block w-full rounded-md border border-gray-300 py-1 px-2 text-gray-500 mb-5'
@@ -278,13 +293,13 @@ export const Form = () => {
 
                 {/* Síntomas */}
                 <div>
-                    <label className="mb-2 block text-sm font-semibold">Síntomas</label>
+                    <label className="mb-2 block text-sm font-semibold">Descripcion</label>
                     <textarea
-                        placeholder="Ingresa los síntomas"
+                        placeholder="indique la talla de uniforme"
                         className="block w-full rounded-md border border-gray-300 py-1 px-2 text-gray-500 mb-5"
-                        {...register("sintomasMascota", { required: "El síntoma de la mascota es obligatorio" })}
+                        {...register("descripcion", { required: "campo es obligatorio" })}
                     />
-                    {errors.sintomasMascota && <p className="text-red-800">{errors.sintomasMascota.message}</p>}
+                    {errors.descripcion && <p className="text-red-800">{errors.descripcion.message}</p>}
                 </div>
             </fieldset>
 
