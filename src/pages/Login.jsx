@@ -1,27 +1,67 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link, useNavigate } from 'react-router';
+import { Link, useNavigate } from 'react-router'; 
 import useFetch from '../hooks/useFetch';
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify'; 
 import storeAuth from '../context/storeAuth';
 
+import { GoogleLogin } from '@react-oauth/google';
 
 const Login = () => {
-    const navigate = useNavigate()
-    const [showPassword, setShowPassword] = useState(false);
-    const { register, handleSubmit, formState: { errors } } = useForm()
-    const { fetchDataBackend } = useFetch()
-    const { setToken, setRol } = storeAuth()
+  const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
+  const { register, handleSubmit, formState: { errors } } = useForm();
+  const { fetchDataBackend } = useFetch();
+  const { setToken, setRol } = storeAuth();
 
-    const loginUser = async(data) => {
-        const url = `${import.meta.env.VITE_BACKEND_URL}/login`
-        const response = await fetchDataBackend(url, data,'POST', null)
-        setToken(response.token)
-        setRol(response.rol)
-        if(response){
-            navigate('/dashboard')
-        }
+  const loginUser = async (data) => {
+    try {
+      const url = data.password.includes("POLI")
+        ? `${import.meta.env.VITE_BACKEND_URL}/estudiante/login`
+        : `${import.meta.env.VITE_BACKEND_URL}/login`;
+      const response = await fetchDataBackend(url, data, 'POST');
+
+      if (response && response.token) {
+        setToken(response.token);
+        setRol(response.rol);
+        navigate('/dashboard');
+      } else {
+        toast.error(response.msg || 'Error en el login');
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error('Ocurrió un error al iniciar sesión');
     }
+  };
+
+  const handleGoogleLoginSuccess = async (credentialResponse) => {
+    const idToken = credentialResponse.credential; // Correcto: idToken
+
+    try {
+      const response = await fetchDataBackend(
+        `${import.meta.env.VITE_BACKEND_URL}/auth/google-login`,
+        { idToken }, // Corregido: Se envía el objeto con la clave 'idToken'
+        'POST'
+      );
+      
+      if (response && response.token) {
+        setToken(response.token);
+        setRol(response.rol || 'administrador'); // Mejora: Asigna un rol por defecto
+        navigate('/dashboard');
+      } else {
+        toast.error(response.msg || 'Error en la autenticación con Google');
+      }
+    } catch (error) {
+      console.error("Error enviando token al backend:", error);
+      toast.error("Error enviando token al backend");
+    }
+  };
+
+  const handleGoogleLoginFailure = () => {
+    console.error("Google Login Failed");
+    toast.error('No se pudo iniciar sesión con Google');
+  };
+
 
     return (
         <div className="flex flex-col sm:flex-row h-screen">
@@ -86,18 +126,22 @@ const Login = () => {
                         </div>
                     </form>
 
-                    {/* Separador con opción de "O" */}
+                    
+                    {/* Separador */}
                     <div className="mt-6 grid grid-cols-3 items-center text-gray-400">
                         <hr className="border-gray-400" />
-                        <p className="text-center text-sm"> inicia sesion con </p>
+                        <p className="text-center text-sm">O</p>
                         <hr className="border-gray-400" />
                     </div>
 
-                    {/* Botón de inicio de sesión con Google */}
-                    <button className="bg-blue-200 border py-2 w-full rounded-xl mt-5 flex justify-center items-center text-sm hover:scale-105 duration-300 hover:bg-blue-800 hover:text-white">
-                        <img className="w-5 mr-2" src="https://cdn-icons-png.flaticon.com/512/281/281764.png" alt="Google icon" />
-                        oogle
-                    </button>
+                    {/* Google Login */}
+                    <div className="mt-5">
+                        <GoogleLogin
+                        clientId={import.meta.env.VITE_CLIENT_ID}
+                        onSuccess={handleGoogleLoginSuccess}
+                        onError={handleGoogleLoginFailure}
+                        />
+                    </div>
 
                     {/* Olvidaste tu contraseña */}
                     <div className="mt-5 text-xs border-b-2 py-4">
