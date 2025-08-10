@@ -82,36 +82,34 @@ export const Form = () => {
             {/* Información del propietario */}
             <fieldset className="border-2 border-gray-500 p-6 rounded-lg shadow-lg">
                 <legend className="text-xl font-bold text-gray-700 bg-gray-200 px-4 py-1 rounded-md">
-                    Información del propietario
+                    Ingreso de estudiante
                 </legend>
 
-                {/* Cédula */}
+                {/* Nombre del estudiante*/}
                 <div>
-                    <label className="mb-2 block text-sm font-semibold">Cédula</label>
+                    <label className="mb-2 block text-sm font-semibold">Nombre</label>
                     <div className="flex items-center gap-10 mb-5">
                         <input
-                            type="number"
+                            type="text"
                             placeholder="Ingresa la cédula"
                             className="block w-full rounded-md border border-gray-300 py-1 px-2 text-gray-500"
-                            {...register("cedulaPropietario", { required: "La cédula es obligatoria" })}
+                            {...register("nombreEstudiante", { required: " Se requiere nombre del estudiante" })}
                         />
-                        <button className="py-1 px-8 bg-gray-600 text-slate-300 border rounded-xl hover:scale-110 duration-300 hover:bg-gray-900 hover:text-white sm:w-80">
-                            Consultar
-                        </button>
+                        
                     </div>
-                    {errors.cedulaPropietario && <p className="text-red-800">{errors.cedulaPropietario.message}</p>}
+                    {errors.nombreEstudiante && <p className="text-red-800">{errors.nombreEstudiante.message}</p>}
                 </div>
 
-                {/* Nombre completo */}
+                {/* Apellido del estudiante */}
                 <div>
-                    <label className="mb-2 block text-sm font-semibold">Nombres completos</label>
+                    <label className="mb-2 block text-sm font-semibold">Apellido</label>
                     <input
                         type="text"
                         placeholder="Ingresa nombre y apellido"
                         className="block w-full rounded-md border border-gray-300 py-1 px-2 text-gray-500 mb-5"
-                        {...register("nombrePropietario", { required: "El nombre completo es obligatorio" })}
+                        {...register("apellidoEstudiante", { required: "Se requiere Apellido del estudiante" })}
                     />
-                    {errors.nombrePropietario && <p className="text-red-800">{errors.nombrePropietario.message}</p>}
+                    {errors.apellidoEstudiante && <p className="text-red-800">{errors.apellidoEstudiante.message}</p>}
                 </div>
 
                 {/* Correo electrónico */}
@@ -121,9 +119,9 @@ export const Form = () => {
                         type="email"
                         placeholder="Ingresa el correo electrónico"
                         className="block w-full rounded-md border border-gray-300 py-1 px-2 text-gray-500 mb-5"
-                        {...register("emailPropietario", { required: "El correo electrónico es obligatorio" })}
+                        {...register("emailEstudiante", { required: "El correo electrónico es obligatorio" })}
                     />
-                    {errors.emailPropietario && <p className="text-red-800">{errors.emailPropietario.message}</p>}
+                    {errors.emailEstudiante && <p className="text-red-800">{errors.emailEstudiante.message}</p>}
                 </div>
 
                 {/* Celular */}
@@ -133,11 +131,16 @@ export const Form = () => {
                         type="number"
                         placeholder="Ingresa el celular"
                         className="block w-full rounded-md border border-gray-300 py-1 px-2 text-gray-500 mb-5"
-                        {...register("celularPropietario", { required: "El celular es obligatorio" })}
+                        {...register("celularEstudiante", { required: "El celular es obligatorio" })}
                     />
-                    {errors.celularPropietario && <p className="text-red-800">{errors.celularPropietario.message}</p>}
+                    {errors.celularEstudiante && <p className="text-red-800">{errors.celularEstudiante.message}</p>}
                 </div>
             </fieldset>
+
+
+
+
+            {/*--------------------------------------------------------------------------------------------------------------*/ }
 
             {/* Información de la mascota */}
             <fieldset className="border-2 border-gray-500 p-6 rounded-lg shadow-lg mt-10">
