@@ -36,7 +36,7 @@ const Table = () => {
         <table className="w-full mt-5 table-auto shadow-lg bg-white">
             <thead className="bg-gray-800 text-slate-400">
                 <tr>
-                    {["N°", "Nombre Estudiante", "Disciplina", "Email", "Celular", "Estado", "Acciones"].map((header) => (
+                    {["N°", "Nombre Estudiante", "Carrera", "Email", "Celular", "Estado", "Acciones"].map((header) => (
                         <th key={header} className="p-2">{header}</th>
                     ))}
                 </tr>
