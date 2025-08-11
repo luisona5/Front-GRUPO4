@@ -1,8 +1,13 @@
 import { MdDeleteForever, MdInfo, MdPublishedWithChanges } from "react-icons/md";
 import useFetch from "../../hooks/useFetch";
 import { useEffect, useState } from "react";
+import { useNavigate } from 'react-router'
+
 
 const Table = () => {
+
+    const navigate = useNavigate()
+
 
     const { fetchDataBackend } = useFetch()
     const [studients, setStudients] = useState([])
@@ -63,6 +68,7 @@ const Table = () => {
                                 <MdInfo
                                     title="Detalle"
                                     className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-2 hover:text-green-600"
+                                    onClick={() => navigate(`/dashboard/visualizar/${studient._id}`)}
                                 />
 
                                 <MdDeleteForever
