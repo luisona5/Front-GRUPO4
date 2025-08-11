@@ -48,7 +48,7 @@ const Table = () => {
                             key={studient._id}>
                             <td>{index + 1}</td>
                             <td>{studient.nombreEstudiante}</td>
-                            <td>{studient.nombre}</td>
+                            <td>{studient.carreraEstudiante}</td>
                             <td>{studient.emailEstudiante}</td>
                             <td>{studient.celularEstudiante}</td>
                             <td>
