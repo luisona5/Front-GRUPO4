@@ -61,6 +61,8 @@ export const Form = () => {
                 formData.append(key, data[key]) // se guardan nombre y edad
             }
         })
+
+
         const url = `${import.meta.env.VITE_BACKEND_URL}/estudiante/registro`
         const storedUser = JSON.parse(localStorage.getItem("auth-token"))
         const headers= {
@@ -75,6 +77,10 @@ export const Form = () => {
             }, 2000);
         }
     }
+
+
+
+    
     return (
         <form onSubmit={handleSubmit(registerStudient)}>
             <ToastContainer />
