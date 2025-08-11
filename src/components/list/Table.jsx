@@ -61,7 +61,7 @@ const Table = () => {
                                 />
 
                                 <MdInfo
-                                    title="Más información"
+                                    title="Detalle"
                                     className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-2 hover:text-green-600"
                                 />
 
