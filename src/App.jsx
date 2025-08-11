@@ -15,7 +15,7 @@ import Update from './pages/Update'
 
 import Chat from './pages/Chat'
 import Reset from './pages/Reset'
-import PublicRoute from './routers/PublicRouter'
+import PublicRoute from './routes/PublicRouter'
 import ProtectedRoute from './routers/ProtectedRouter'
 import storeProfile from './context/storeProfile'
 import storeAuth from './context/storeAuth'
