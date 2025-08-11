@@ -44,40 +44,42 @@ export const Form = () => {
 
 
     const registerStudient = async (data) => {
-        /*
-        const data = {
-            nombre: "Firulais",
-            edad: "2",
-            imagen: [File]  // un array con 1 imagen cargada por el usuario
-        }
-        */
-        // clase de JavaScript ideal para enviar datos como texto + imágenes al servidor
-        const formData = new FormData()
-        // Recorre todos los elementos del formulario
-        Object.keys(data).forEach((key) => {
-            if (key === "imagen") {
-                formData.append("imagen", data.imagen[0]) // se guarda el archivo real
-            } else {
-                formData.append(key, data[key]) // se guardan nombre y edad
-            }
-        })
+    const formData = new FormData();
 
-
-        const url = `${import.meta.env.VITE_BACKEND_URL}/estudiante/registro`
-        const storedUser = JSON.parse(localStorage.getItem("auth-token"))
-        const headers= {
-                "Content-Type": "multipart/form-data",
-                Authorization: `Bearer ${storedUser.state.token}`
+    Object.keys(data).forEach((key) => {
+        if (key === "imagen" && data.imageOption === "upload") {
+            // Manejar la imagen subida por el usuario
+            if (data.imagen[0]) {
+                formData.append("imagen", data.imagen[0]);
             }
-        
-        const response = await fetchDataBackend(url, formData, "POST", headers)
-        if (response) {
-            setTimeout(() => {
-                navigate("/dashboard/listar")
-            }, 2000);
+        } else if (key === "avatarCarreraIA" && data.imageOption === "ia") {
+            // Manejar la imagen generada por IA
+            if (data.avatarCarreraIA) {
+                // Convertir la cadena Base64 en un Blob y luego en un File
+                const blob = await fetch(data.avatarCarreraIA).then(res => res.blob());
+                const file = new File([blob], "avatarIA.jpeg", { type: "image/jpeg" });
+                formData.append("imagen", file);
+            }
+        } else {
+            // Agregar otros campos de texto
+            formData.append(key, data[key]);
         }
+    });
+
+    const url = `${import.meta.env.VITE_BACKEND_URL}/estudiante/registro`;
+    const storedUser = JSON.parse(localStorage.getItem("auth-token"));
+    const headers = {
+        // Con FormData, el navegador establece automáticamente el Content-Type, no es necesario agregarlo manualmente
+        Authorization: `Bearer ${storedUser.state.token}`
+    };
+
+    const response = await fetchDataBackend(url, formData, "POST", headers);
+    if (response) {
+        setTimeout(() => {
+            navigate("/dashboard/listar");
+        }, 2000);
     }
-
+};
 
 
 
