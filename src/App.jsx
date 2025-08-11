@@ -1,5 +1,5 @@
 
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Route, Routes } from 'react-router'
 import { Home } from './pages/Home'
 import Login from './pages/Login'
 import { Register } from './pages/Register'
@@ -15,12 +15,12 @@ import Update from './pages/Update'
 
 import Chat from './pages/Chat'
 import Reset from './pages/Reset'
-import PublicRoute from './routes/PublicRoute'
-import ProtectedRoute from './routes/ProtectedRoute'
-
-import { useEffect } from 'react'
+import PublicRoute from './routers/PublicRouter'
+import ProtectedRoute from './routers/ProtectedRouter'
 import storeProfile from './context/storeProfile'
 import storeAuth from './context/storeAuth'
+import { useEffect } from 'react'
+
 
 
 function App() {
@@ -32,6 +32,7 @@ function App() {
       profile()
     }
   }, [token])
+
 
   return (
     <>
