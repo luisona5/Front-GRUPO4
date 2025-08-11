@@ -17,7 +17,7 @@ const Details = () => {
             <div>
                 <h1 className='font-black text-4xl text-gray-500'>Visualizar</h1>
                 <hr className='my-4 border-t-2 border-gray-300' />
-                <p className='mb-8'>Este módulo te permite visualizar todos los datos</p>
+                <p className='mb-8'>Informacion detallada de los postulantes</p>
             </div>
             <div>
 
@@ -27,11 +27,11 @@ const Details = () => {
                         <ul className="list-disc pl-5">
 
                             {/* Datos del paciente */}
-                            <li className="text-md text-gray-00 mt-4 font-bold text-xl">Datos del dueño</li>
+                            <li className="text-md text-gray-00 mt-4 font-bold text-xl">Datos del Estudiante</li>
 
                             <ul className="pl-5">
                                 <li className="text-md text-gray-00 mt-2">
-                                    <span className="text-gray-600 font-bold">Cédula: </span>
+                                    <span className="text-gray-600 font-bold">Nombres completos: </span>
                                 </li>
 
                                 <li className="text-md text-gray-00 mt-2">
