@@ -8,7 +8,7 @@ const Table = () => {
     const [studients, setStudients] = useState([])
 
     const listStudients = async () => {
-        const url = `${import.meta.env.VITE_BACKEND_URL}/estudiantes`
+        const url = `${import.meta.env.VITE_BACKEND_URL}/estudiante`
         const storedUser = JSON.parse(localStorage.getItem("auth-token"))
         const headers= {
             "Content-Type": "application/json",
