@@ -1,66 +1,26 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link, useNavigate } from 'react-router'; 
+import { Link, useNavigate } from 'react-router';
 import useFetch from '../hooks/useFetch';
-import { ToastContainer, toast } from 'react-toastify'; 
-import storeAuth from '../context/storeAuth';
+import { ToastContainer } from 'react-toastify';
 
 import { GoogleLogin } from '@react-oauth/google';
+import {jwtDecode } from "jwt-decode"
 
 const Login = () => {
-  const navigate = useNavigate();
-  const [showPassword, setShowPassword] = useState(false);
-  const { register, handleSubmit, formState: { errors } } = useForm();
-  const { fetchDataBackend } = useFetch();
-  const { setToken, setRol } = storeAuth();
+    const navigate = useNavigate()
+    const [showPassword, setShowPassword] = useState(false);
+    const { register, handleSubmit, formState: { errors } } = useForm()
+    const { fetchDataBackend } = useFetch()
 
-  const loginUser = async (data) => {
-    try {
-      const url = data.password.includes("POLI")
-        ? `${import.meta.env.VITE_BACKEND_URL}/estudiante/login`
-        : `${import.meta.env.VITE_BACKEND_URL}/login`;
-      const response = await fetchDataBackend(url, data, 'POST');
-
-      if (response && response.token) {
-        setToken(response.token);
-        setRol(response.rol);
-        navigate('/dashboard');
-      } else {
-        toast.error(response.msg || 'Error en el login');
-      }
-    } catch (error) {
-      console.error(error);
-      toast.error('Ocurrió un error al iniciar sesión');
+    const loginUser = async(data) => {
+        const url = `${import.meta.env.VITE_BACKEND_URL}/login`
+        const response = await fetchDataBackend(url, data,'POST')
+        if(response){
+            navigate('/dashboard')
+        }
     }
-  };
 
-  const handleGoogleLoginSuccess = async (credentialResponse) => {
-    const idToken = credentialResponse.credential; // Correcto: idToken
-
-    try {
-      const response = await fetchDataBackend(
-        `${import.meta.env.VITE_BACKEND_URL}/auth/google-login`,
-        { idToken }, // Corregido: Se envía el objeto con la clave 'idToken'
-        'POST'
-      );
-      
-      if (response && response.token) {
-        setToken(response.token);
-        setRol(response.rol || 'administrador'); // Mejora: Asigna un rol por defecto
-        navigate('/dashboard');
-      } else {
-        toast.error(response.msg || 'Error en la autenticación con Google');
-      }
-    } catch (error) {
-      console.error("Error enviando token al backend:", error);
-      toast.error("Error enviando token al backend");
-    }
-  };
-
-  const handleGoogleLoginFailure = () => {
-    console.error("Google Login Failed");
-    toast.error('No se pudo iniciar sesión con Google');
-  };
 
 
     return (
@@ -76,7 +36,7 @@ const Login = () => {
             {/* Contenedor de formulario */}
             <div className="w-full sm:w-1/2 h-screen bg-white flex justify-center items-center">
                 <div className="md:w-4/5 sm:w-full">
-                    <h1 className="text-3xl font-semibold mb-2 text-center uppercase text-gray-500">Bienvenido(a) </h1>
+                    <h1 className="text-3xl font-semibold mb-2 text-center uppercase text-gray-500">Bienvenido/a </h1>
                     <small className="text-gray-400 block my-4 text-sm">Por favor ingresa tus datos</small>
 
                     <form onSubmit={handleSubmit(loginUser)}>
@@ -137,9 +97,12 @@ const Login = () => {
                     {/* Google Login */}
                     <div className="mt-5">
                         <GoogleLogin
-                        clientId={import.meta.env.VITE_CLIENT_ID}
-                        onSuccess={handleGoogleLoginSuccess}
-                        onError={handleGoogleLoginFailure}
+                        onSuccess={(credentialResponse)=>{
+                            console.log(credentialResponse)
+                            console.log(jwtDecode(credentialResponse.credential))
+                        }}
+                        onError={()=>console.log("login failed")}
+                        
                         />
                     </div>
 
@@ -160,3 +123,4 @@ const Login = () => {
 }
 
 export default Login;
+
