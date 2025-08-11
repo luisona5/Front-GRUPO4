@@ -31,13 +31,13 @@ export const Form = () => {
             // data:image/png;base64,iVBORw0KGg
             const base64Image = await convertBlobToBase64(blob)           
             setAvatar(prev => ({ ...prev, image: imageUrl, loading: false }))
-            setValue("avatarMascotaIA", base64Image)
+            setValue("avatarCarreraIA", base64Image)
         }
         else {
             toast.error("Error al generar la imagen, vuelve a intentarlo dentro de 1 minuto");
             setAvatar(prev => ({ ...prev, image: "https://s.france24.com/media/display/6aca8d1a-7783-11ea-9cf2-005056bf87d6/w:1280/p:16x9/WEB%2005ABR%20DEPORTES%20PORTADA%20FOTO.jpg",
                  loading: false }))
-            setValue("avatarMascotaIA", avatar.image)
+            setValue("avatarCarreraIA", avatar.image)
         }
     }
 
@@ -80,7 +80,7 @@ export const Form = () => {
 
 
 
-    
+
     return (
         <form onSubmit={handleSubmit(registerStudient)}>
             <ToastContainer />
