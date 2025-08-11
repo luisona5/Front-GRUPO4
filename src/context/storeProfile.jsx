@@ -42,6 +42,7 @@ const storeProfile = create((set) => ({
                 const url = `${import.meta.env.VITE_BACKEND_URL}/administrador/actualizarpassword/${id}`
                 const respuesta = await axios.put(url, data, getAuthHeaders())
                 toast.success(respuesta?.data?.msg)
+                toast.success("Password actualizado correctamente")
                 return respuesta
             } catch (error) {
                 console.log(error)
