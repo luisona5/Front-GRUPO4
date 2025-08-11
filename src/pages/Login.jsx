@@ -100,6 +100,7 @@ const Login = () => {
                         onSuccess={(credentialResponse)=>{
                             console.log(credentialResponse)
                             console.log(jwtDecode(credentialResponse.credential))
+                            navigate('/dashboard')
                         }}
                         onError={()=>console.log("login failed")}
                         
