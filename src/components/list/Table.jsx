@@ -15,7 +15,7 @@ const Table = () => {
             Authorization: `Bearer ${storedUser.state.token}`,
         }
         const response = await fetchDataBackend(url, null, "GET", headers)
-        setStudients(...studients, response)
+        setStudients( response)
     }
 
     useEffect(() => {
