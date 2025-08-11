@@ -45,6 +45,7 @@ const Dashboard = () => {
 
             </div>
 
+
             <div className='flex-1 flex flex-col justify-between h-screen bg-gray-100'>
                 <div className='bg-gray-100 py-2 flex md:justify-end items-center gap-5 justify-center'>
                     <div className='text-md font-semibold text-slate-100'>
