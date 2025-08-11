@@ -42,64 +42,58 @@ export const Form = () => {
     }
 
 
-    const registerStudient = async (data) => {
-        // Obtenemos la opción de imagen seleccionada
-        const imageOption = data.imageOption;
+   const registerStudient = async (data) => {
+    const imageOption = data.imageOption;
+    const formData = new FormData();
 
-        const formData = new FormData();
-        
-        // Recorrer todos los datos del formulario, excluyendo los campos de imagen temporales
-        Object.keys(data).forEach((key) => {
-            if (key !== "imagen" && key !== "avatarCarreraIA") {
-                formData.append(key, data[key]);
+    Object.keys(data).forEach((key) => {
+        // Excluir claves de imagen para manejarlas por separado
+        if (key !== "imagen" && key !== "avatarCarreraIA" && key !== "imageOption") {
+            formData.append(key, data[key]);
+        }
+    });
+
+    if (imageOption === "upload" && data.imagen && data.imagen[0]) {
+        // Opción: Subir Imagen
+        formData.append("imagen", data.imagen[0]);
+    } else if (imageOption === "ia" && data.avatarCarreraIA) {
+        // Opción: Generar con IA
+        try {
+            // Convertir Base64 a Blob y luego a File para el backend
+            const base64String = data.avatarCarreraIA.split(',')[1];
+            const binaryString = atob(base64String);
+            const bytes = new Uint8Array(binaryString.length);
+            for (let i = 0; i < binaryString.length; i++) {
+                bytes[i] = binaryString.charCodeAt(i);
             }
-        });
+            const blob = new Blob([bytes], { type: 'image/jpeg' });
+            const file = new File([blob], "imagen_ia.jpeg", { type: "image/jpeg" });
 
-        // Lógica para adjuntar la imagen según la opción seleccionada
-        if (imageOption === "upload" && data.imagen && data.imagen[0]) {
-            // Si es una imagen subida por el usuario
-            formData.append("imagen", data.imagen[0]);
-        } else if (imageOption === "ia" && data.avatarCarreraIA) {
-            // Si la imagen es generada por IA, la convertimos a un archivo
-            try {
-                // Convertir la cadena Base64 a un Blob
-                const base64String = data.avatarCarreraIA.split(',')[1];
-                const binaryString = atob(base64String);
-                const bytes = new Uint8Array(binaryString.length);
-                for (let i = 0; i < binaryString.length; i++) {
-                    bytes[i] = binaryString.charCodeAt(i);
-                }
-                const blob = new Blob([bytes], { type: 'image/jpeg' });
-                const file = new File([blob], "imagen_ia.jpeg", { type: "image/jpeg" });
-
-                // Adjuntar el archivo al formData con la clave 'imagen'
-                formData.append("imagen", file);
-            } catch (error) {
-                console.error("Error al convertir Base64 a File:", error);
-                toast.error("Error al procesar la imagen generada por IA.");
-                return; // Detener el envío si hay un error
-            }
-        } else {
-            // Manejar el caso donde no se selecciona ninguna imagen (si es un campo obligatorio)
-            toast.error("Por favor, selecciona o genera una imagen.");
+            formData.append("imagen", file);
+        } catch (error) {
+            console.error("Error al convertir Base64 a File:", error);
+            toast.error("Error al procesar la imagen generada por IA.");
             return;
         }
-
-        const url = `${import.meta.env.VITE_BACKEND_URL}/estudiante/registro`;
-        const storedUser = JSON.parse(localStorage.getItem("auth-token"));
-        const headers = {
-            // No es necesario especificar el "Content-Type" para FormData, el navegador lo hace automáticamente.
-            Authorization: `Bearer ${storedUser.state.token}`
-        };
-        
-        const response = await fetchDataBackend(url, formData, "POST", headers);
-        if (response) {
-            setTimeout(() => {
-                navigate("/dashboard/listar");
-            }, 2000);
-        }
+    } else {
+        toast.error("Por favor, selecciona o genera una imagen.");
+        return;
     }
 
+    const url = `${import.meta.env.VITE_BACKEND_URL}/estudiante/registro`;
+    const storedUser = JSON.parse(localStorage.getItem("auth-token"));
+    const headers = {
+        Authorization: `Bearer ${storedUser.state.token}`
+    };
+    
+    // El navegador establece el Content-Type automáticamente para FormData
+    const response = await fetchDataBackend(url, formData, "POST", headers);
+    if (response) {
+        setTimeout(() => {
+            navigate("/dashboard/listar");
+        }, 2000);
+    }
+};
 
     return (
         <form onSubmit={handleSubmit(registerStudient)}>
