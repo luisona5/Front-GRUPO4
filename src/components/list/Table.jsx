@@ -47,7 +47,7 @@ const Table = () => {
                         <tr className="hover:bg-gray-300 text-center"
                             key={studient._id}>
                             <td>{index + 1}</td>
-                            <td>{studient.nombreEstudiante}</td>
+                            <td>{`${studient.nombreEstudiante} ${studient.apellidoEstudiante}`}</td>
                             <td>{studient.carreraEstudiante}</td>
                             <td>{studient.emailEstudiante}</td>
                             <td>{studient.celularEstudiante}</td>
