@@ -21,6 +21,8 @@ const Login = () => {
         }
     }
 
+    
+
 
 
     return (
@@ -103,6 +105,7 @@ const Login = () => {
                             navigate('/dashboard')
                         }}
                         onError={()=>console.log("login failed")}
+                        auto_select={true}
                         
                         />
                     </div>
