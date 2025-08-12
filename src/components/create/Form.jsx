@@ -4,7 +4,7 @@ import { useNavigate } from "react-router"
 import { useForm } from "react-hook-form"
 import {generateAvatar,convertBlobToBase64} from "../../helpers/consultarIA"
 import { toast, ToastContainer } from "react-toastify"
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 
 
 export const Form = (studient) => {
