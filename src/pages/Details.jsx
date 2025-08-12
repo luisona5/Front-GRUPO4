@@ -23,7 +23,8 @@ const Details = () => {
     try {
       const response = await fetchDataBackend(url, null, "GET", headers);
       console.log(response);
-      setStudients(response);
+      setStudients(response.estudiante);
+      setTreatments(response.deportes);
     } catch (error) {
       console.error("Error fetching student details:", error);
       // Manejar el error, mostrar un mensaje al usuario, etc.
