@@ -16,7 +16,7 @@ const Profile = () => {
                 <p className='mb-8'>Este módulo te permite gestionar el perfil del usuario</p>
             </div>
             {
-                user && user?.rol == "paciente"
+                user && user?.rol == "estudiante"
                     ? (<CardProfileOwner />)
                     : (
                         <div className='flex justify-around gap-x-8 flex-wrap gap-y-8 md:flex-nowrap'>
