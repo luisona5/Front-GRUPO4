@@ -38,7 +38,7 @@ const Table = () => {
                 }
             }
             const data ={
-                salidaCarrera:new Date().toString()
+                periodoEstudiante:new Date().toString()
             }
             await fetchDataBackend(url, data, "DELETE", options.headers)
             setStudients((prevStudients) => prevStudients.filter(studient => studient._id !== id))
