@@ -81,20 +81,45 @@ export const Form = (studient) => {
         return;
     }
 
-    const url = `${import.meta.env.VITE_BACKEND_URL}/estudiante/registro`;
+    let url = `${import.meta.env.VITE_BACKEND_URL}/estudiante/registro`;
     const storedUser = JSON.parse(localStorage.getItem("auth-token"));
     const headers = {
         Authorization: `Bearer ${storedUser.state.token}`
     };
-    
-    // El navegador establece el Content-Type automáticamente para FormData
-    const response = await fetchDataBackend(url, formData, "POST", headers);
-    if (response) {
-        setTimeout(() => {
+
+    let response
+        if (studient?._id) {
+            url = `${import.meta.env.VITE_BACKEND_URL}/estudiante/actualizar/${studient._id}`
+            response = await fetchDataBackend(url, formData, "PUT", headers)
+        }
+        else{
+            response = await fetchDataBackend(url, formData, "POST", headers)
+        }
+        
+        if (response) {
+             setTimeout(() => {
             navigate("/dashboard/listar");
-        }, 2000);
-    }
+                }, 2000);
+        }
 };
+
+useEffect(() => {
+        if (studient) {
+            reset({
+                apellidoEstudiante: studient?.apellidoEstudiante,
+                nombreEstudiante: studient?.nombreEstudiante,
+                emailEstudiante: studient?.emailEstudiante,
+                celularEstudiante: studient?.celularEstudiante,
+                emailEstudiante:studient?. emailEstudiante,
+                carreraEstudiante: studient?.carreraEstudiante,
+                horarioDeporte: studient?.horarioDeporte,
+                descripcionDeporte: studient?.descripcionDeporte,
+                tipoDeporte: studient?.tipoDeporte,
+                lugarDeporte: studient?.lugarDeporte
+            })
+        }
+    }, [])
+
 
     return (
         <form onSubmit={handleSubmit(registerStudient)}>
@@ -116,7 +141,11 @@ export const Form = (studient) => {
                             className="block w-full rounded-md border border-gray-300 py-1 px-2 text-gray-500"
                             {...register("nombreEstudiante", { required: " Se requiere nombre del estudiante" })}
                         />
-                        
+                        <button className="py-1 px-8 bg-gray-600 text-slate-300 border rounded-xl hover:scale-110 duration-300 hover:bg-gray-900 hover:text-white sm:w-80"
+                        disabled={studient}
+                        >
+                            Consultar
+                        </button>
                     </div>
                     {errors.nombreEstudiante && <p className="text-red-800">{errors.nombreEstudiante.message}</p>}
                 </div>
@@ -239,7 +268,8 @@ export const Form = (studient) => {
                         <input
                             type="radio"
                             value="upload"
-                            {...register("imageOption", { required: "Seleccione una opción" })}
+                            {...register("imageOption", { required: !studient && "El nombre de la mascota es obligatorio"})}
+                            disabled={studient}
                         />
                         Subir Imagen
                     </label>
@@ -330,7 +360,7 @@ export const Form = (studient) => {
                 type="submit"
                 className="bg-gray-800 w-full p-2 mt-5 text-slate-300 uppercase font-bold rounded-lg 
                 hover:bg-gray-600 cursor-pointer transition-all"
-                value="Registrar"
+                value={studient ? "Actualizar" : "Registrar"}
             />
         </form>
 
