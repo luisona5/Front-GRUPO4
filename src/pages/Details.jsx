@@ -1,15 +1,33 @@
-/* eslint-disable no-unused-vars */
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import TableTreatments from "../components/treatments/Table"
 import ModalTreatments from "../components/treatments/Modal"
-
-
+import { useParams } from "react-router"
+import useFetch from "../hooks/useFetch"
 
 const Details = () => {
-    
+    const { id } = useParams()
+    const [studient, setPatient] = useState({})
+    const [treatments, setTreatments] = useState([])
+    const { fetchDataBackend } = useFetch()
 
-    const [treatments, setTreatments] = useState(["demo"])
+    const listStudient = async () => {
+        const url = `${import.meta.env.VITE_BACKEND_URL}/estudiante/${id}`
+        const storedUser = JSON.parse(localStorage.getItem("auth-token"))
+        const headers= {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${storedUser.state.token}`
+        }
+        const response = await fetchDataBackend(url, null, "GET", headers)
+        setPatient(response)
+    }
 
+    const formatDate = (date) => {
+        return new Date(date).toLocaleDateString('es-EC', { dateStyle: 'long', timeZone: 'UTC' })
+    }
+
+    useEffect(() => {
+        listStudient()
+    }, [])
 
 
     return (
@@ -17,7 +35,7 @@ const Details = () => {
             <div>
                 <h1 className='font-black text-4xl text-gray-500'>Visualizar</h1>
                 <hr className='my-4 border-t-2 border-gray-300' />
-                <p className='mb-8'>Informacion detallada de los postulantes</p>
+                <p className='mb-8'>Este módulo te permite visualizar todos los datos</p>
             </div>
             <div>
 
@@ -31,55 +49,32 @@ const Details = () => {
 
                             <ul className="pl-5">
                                 <li className="text-md text-gray-00 mt-2">
-                                    <span className="text-gray-600 font-bold">Nombres completos: </span>
+                                    <span className="text-gray-600 font-bold">Nombres: {`${studient?.nombreEstudiante} ${studient?.apellidoEstudiante }`} </span>
                                 </li>
 
                                 <li className="text-md text-gray-00 mt-2">
-                                    <span className="text-gray-600 font-bold">Nombres completos: </span>
+                                    <span className="text-gray-600 font-bold"> Carrera: {studient?.carreraEstudiante}</span>
                                 </li>
 
                                 <li className="text-md text-gray-00 mt-2">
-                                    <span className="text-gray-600 font-bold">Correo electrónico: </span>
+                                    <span className="text-gray-600 font-bold">correo: {studient?.emailEstudiante}</span>
                                 </li>
 
                                 <li className="text-md text-gray-00 mt-2">
-                                <span className="text-gray-600 font-bold">Celular: </span>
+                                <span className="text-gray-600 font-bold">Celular: {studient?.celularEstudiante}</span>
+                                </li>
+
+                                <li className="text-md text-gray-00 mt-2">
+                                <span className="text-gray-600 font-bold">Periodo: {studient?.periodoEstudiante}</span>
                                 </li>
                             </ul>
 
-
-                            {/* Datos del dueño */}
-                            <li className="text-md text-gray-00 mt-4 font-bold text-xl">Datos del paciente</li>
-
-                            <ul className="pl-5">
-                                <li className="text-md text-gray-00 mt-2">
-                                    <span className="text-gray-600 font-bold">Nombre: </span>
-                                </li>
-
-                                <li className="text-md text-gray-00 mt-2">
-                                    <span className="text-gray-600 font-bold">Tipo: </span>
-                                </li>
-
-                                <li className="text-md text-gray-00 mt-2">
-                                    <span className="text-gray-600 font-bold">Fecha de nacimiento: </span>
-                                </li>
-
-                                <li className="text-md text-gray-00 mt-2">
-                                    <span className="text-gray-600 font-bold">Estado: </span>
-                                    <span className="bg-blue-100 text-green-500 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">
-                                    </span>
-                                </li>
-
-                                <li className="text-md text-gray-00 mt-4">
-                                    <span className="text-gray-600 font-bold">Síntoma u Observación: </span>
-                                </li>
-
-                            </ul>
                         </ul>
+                    
                     </div>
 
                     <div>
-                    <img src="https://cdn-icons-png.flaticon.com/512/2138/2138440.png" alt="dogandcat" className='h-80 w-80' />
+                        <img src={studient?.avatarCarrera || studient?.avatarCarreraID} alt="ball" className='h-80 w-80 rounded-full' />
                     </div>
                 </div>
 
@@ -87,17 +82,13 @@ const Details = () => {
 
                 <div className='flex justify-between items-center'>
 
-                    <p>Este módulo te permite gestionar tratamientos</p>
-                    {
-                        true &&
-                        (
-                            <button className="px-5 py-2 bg-green-800 text-white rounded-lg hover:bg-green-700">
-                                Registrar
-                            </button>
-                        )
-                    }
+                    <p>Este módulo te permite gestionar los tratamientos</p>
 
-                    {false  && (<ModalTreatments/>)}
+                    <button className="px-5 py-2 bg-green-800 text-white rounded-lg hover:bg-green-700">
+                        Registrar
+                    </button>
+
+                    {false && (<ModalTreatments />)}
 
                 </div>
 
