@@ -7,7 +7,7 @@ const ModalTreatments = () => {
 
             <div className="bg-gray-800 rounded-lg shadow-lg overflow-y-auto  max-w-lg w-full border border-gray-700 relative">
 
-                <p className="text-white font-bold text-lg text-center mt-4">Tratamiento</p>
+                <p className="text-white font-bold text-lg text-center mt-4">Uniforme</p>
 
                 <form className="p-10">
                     <div>

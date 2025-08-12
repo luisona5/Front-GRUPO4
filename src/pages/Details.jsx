@@ -6,8 +6,10 @@ import useFetch from "../hooks/useFetch";
 
 const Details = () => {
   const { id } = useParams();
+  console.log(id)
   const [studient, setStudient] = useState(null); // Inicializar como null
-  const [treatments, setTreatments] = useState([]);
+  console.log(studient)
+  const [treatments, setTreatments] = useState([])
   const { fetchDataBackend } = useFetch();
 
   const listStudients = async () => {
