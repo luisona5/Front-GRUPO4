@@ -7,7 +7,7 @@ import useFetch from "../hooks/useFetch";
 const Details = () => {
   const { id } = useParams();
   console.log(id)
-  const [studient, setStudients] = useState(); 
+  const [studient, setStudients] = useState({}); 
   console.log(studient)
   const [treatments, setTreatments] = useState([])
   const { fetchDataBackend } = useFetch();
@@ -35,7 +35,7 @@ const Details = () => {
 
   useEffect(() => {
     listStudients();
-  }, []);
+  }, [id]);
 
 
 
