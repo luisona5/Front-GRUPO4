@@ -12,7 +12,7 @@ import { NotFound } from './pages/NotFound'
 import Dashboard from './layout/Dashboard'
 import Profile from './pages/Profile'
 import List from './pages/List'
-//import Details from './pages/Details'
+import Details from './pages/Details'
 import Create from './pages/Create'
 import Update from './pages/Update'
 
