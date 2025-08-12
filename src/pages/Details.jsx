@@ -12,6 +12,7 @@ const Details = () => {
 
   const listStudients = async () => {
     const url = `${import.meta.env.VITE_BACKEND_URL}/estudiante/${id}`;
+    console.log(url)
     const storedUser = JSON.parse(localStorage.getItem("auth-token"));
     const headers = {
       "Content-Type": "application/json",
