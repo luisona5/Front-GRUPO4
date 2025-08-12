@@ -27,7 +27,7 @@ const Table = () => {
 
 
     const deleteStudients = async(id) => {
-        const confirmDelete = confirm("Vas registrar la salida del paciente, ¿Estás seguro?")
+        const confirmDelete = confirm("¿Estás seguro de eliminar Estudiante?")
         if(confirmDelete){
             const url = `${import.meta.env.VITE_BACKEND_URL}/estudiante/eliminar/${id}`
             const storedUser = JSON.parse(localStorage.getItem("auth-token"))
