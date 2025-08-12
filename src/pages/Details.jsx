@@ -7,7 +7,7 @@ import useFetch from "../hooks/useFetch"
 const Details = () => {
     const { id } = useParams()
     const [studient, setStudient] = useState({})
-    const [ Sport, setSport] = useState([])
+    const [Sport, setSport] = useState([])
     const { fetchDataBackend } = useFetch()
 
     const listStudient = async () => {
@@ -45,36 +45,65 @@ const Details = () => {
                         <ul className="list-disc pl-5">
 
                             {/* Datos del paciente */}
-                            <li className="text-md text-gray-00 mt-4 font-bold text-xl">Datos del Estudiante</li>
+                            <li className="text-md text-gray-00 mt-4 font-bold text-xl">Datos del dueño</li>
 
                             <ul className="pl-5">
                                 <li className="text-md text-gray-00 mt-2">
-                                    <span className="text-gray-600 font-bold">Nombres: {`${studient?.nombreEstudiante} ${studient?.apellidoEstudiante }`} </span>
+                                    <span className="text-gray-600 font-bold">Nombre: {studient?.nombreEstudiante} </span>
                                 </li>
 
                                 <li className="text-md text-gray-00 mt-2">
-                                    <span className="text-gray-600 font-bold"> Carrera: {studient?.carreraEstudiante}</span>
+                                    <span className="text-gray-600 font-bold">Apellido {studient?.apellidoEstudiante}</span>
                                 </li>
 
                                 <li className="text-md text-gray-00 mt-2">
-                                    <span className="text-gray-600 font-bold">correo: {studient?.emailEstudiante}</span>
-                                </li>
-
-                                <li className="text-md text-gray-00 mt-2">
-                                <span className="text-gray-600 font-bold">Celular: {studient?.celularEstudiante}</span>
+                                    <span className="text-gray-600 font-bold">Correo electrónico: {studient?.emailEstudiante}</span>
                                 </li>
 
                                 <li className="text-md text-gray-00 mt-2">
                                 <span className="text-gray-600 font-bold">Periodo: {studient?.periodoEstudiante}</span>
                                 </li>
+
+                                
                             </ul>
 
+
+                            {/* Datos del dueño */}
+                            <li className="text-md text-gray-00 mt-4 font-bold text-xl">Informacion de la Disciplina</li>
+
+                            <ul className="pl-5">
+                                
+                                <li className="text-md text-gray-00 mt-2">
+                                <span className="text-gray-600 font-bold">Disciplina: {studient?.tipoDeporte}</span>
+                                </li>
+
+                                <li className="text-md text-gray-00 mt-2">
+                                <span className="text-gray-600 font-bold">Horario: {studient?.horarioDeporte}</span>
+                                </li>
+
+                                <li className="text-md text-gray-00 mt-2">
+                                <span className="text-gray-600 font-bold">Lugar: {studient?.lugarDeporte}</span>
+                                </li>
+
+
+
+                                <li className="text-md text-gray-00 mt-2">
+                                    <span className="text-gray-600 font-bold">Estado: </span>
+                                    <span className="bg-blue-100 text-green-500 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">
+                                    {studient && "activo"}
+                                    </span>
+                                </li>
+
+                                <li className="text-md text-gray-00 mt-4">
+                                    <span className="text-gray-600 font-bold">Indica talla {studient?.descripcionDeporte}</span>
+                                </li>
+
+                            </ul>
                         </ul>
-                    
                     </div>
 
                     <div>
-                        <img src={studient?.avatarCarrera || studient?.avatarCarreraID} alt="ball" className='h-80 w-80 rounded-full' />
+                        <img src={studient?.avatarCarrera || studient?.avatarCarreraIA} alt="ball" className='h-80 w-80 rounded-full' />
                     </div>
                 </div>
 
