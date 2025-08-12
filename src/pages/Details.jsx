@@ -6,8 +6,8 @@ import useFetch from "../hooks/useFetch"
 
 const Details = () => {
     const { id } = useParams()
-    const [studient, setPatient] = useState({})
-    const [treatments, setTreatments] = useState([])
+    const [studient, setStudient] = useState({})
+    const [ Sport, setSport] = useState([])
     const { fetchDataBackend } = useFetch()
 
     const listStudient = async () => {
@@ -18,7 +18,7 @@ const Details = () => {
                 Authorization: `Bearer ${storedUser.state.token}`
         }
         const response = await fetchDataBackend(url, null, "GET", headers)
-        setPatient(response)
+        setStudient(response)
     }
 
     const formatDate = (date) => {
@@ -93,13 +93,13 @@ const Details = () => {
                 </div>
 
                 {
-                    treatments.length == 0
+                    Sport.length == 0
                         ?
                         <div className="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
                             <span className="font-medium">No existen registros</span>
                         </div>
                         :
-                        <TableTreatments treatments={treatments} />
+                        <TableTreatments Sport={Sport} />
                 }
             </div>
         </>
