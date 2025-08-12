@@ -1,4 +1,4 @@
-import espacio from './public/error.png'
+import espacio from '../assets/noEncontro.webp'
 
 export const Forbidden = () => {
     return (
