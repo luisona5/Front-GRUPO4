@@ -17,6 +17,7 @@ import Update from './pages/Update'
 
 import Chat from './pages/Chat'
 import Reset from './pages/Reset'
+import Details from './pages/Details'
 import PublicRoute from './routes/PublicRoute'
 import ProtectedRoute from './routes/ProtectedRoute'
 import storeProfile from './context/storeProfile'
@@ -61,6 +62,8 @@ function App() {
                     <Route element={<Dashboard />}>
                       <Route index element={<Profile />} />
                       <Route path='listar' element={<List />} />
+                      <Route path='visualizar/:id' element={<Details />} />
+
                       <Route path='crear' element={
                         <PrivateRouteWithRole>
                           <Create />
