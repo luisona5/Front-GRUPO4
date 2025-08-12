@@ -2,6 +2,8 @@ import { MdDeleteForever, MdInfo, MdPublishedWithChanges } from "react-icons/md"
 import useFetch from "../../hooks/useFetch";
 import { useEffect, useState } from "react";
 import { useNavigate } from 'react-router'
+import { ToastContainer } from "react-toastify"
+
 
 
 const Table = () => {
@@ -21,6 +23,26 @@ const Table = () => {
         }
         const response = await fetchDataBackend(url, null, "GET", headers)
         setStudients( response)
+    }
+
+
+    const deleteStudients = async(id) => {
+        const confirmDelete = confirm("Vas registrar la salida del paciente, ¿Estás seguro?")
+        if(confirmDelete){
+            const url = `${import.meta.env.VITE_BACKEND_URL}/estudiante/eliminar/${id}`
+            const storedUser = JSON.parse(localStorage.getItem("auth-token"))
+            const options = {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${storedUser.state.token}`,
+                }
+            }
+            const data ={
+                salidaCarrera:new Date().toString()
+            }
+            await fetchDataBackend(url, data, "DELETE", options.headers)
+            setStudients((prevStudients) => prevStudients.filter(studient => studient._id !== id))
+        }
     }
 
     useEffect(() => {
@@ -74,6 +96,7 @@ const Table = () => {
                                 <MdDeleteForever
                                     title="Eliminar"
                                     className="h-7 w-7 text-red-900 cursor-pointer inline-block hover:text-red-600"
+                                    onClick={()=>{deleteStudients(studient._id)}}
                                 />
                             </td>
                         </tr>

@@ -30,6 +30,9 @@ const Details = () => {
     }
   };
 
+
+  
+
   useEffect(() => {
     listStudients();
   }, []);
