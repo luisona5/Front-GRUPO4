@@ -7,7 +7,7 @@ import useFetch from "../hooks/useFetch";
 const Details = () => {
   const { id } = useParams();
   console.log(id)
-  const [studient, setStudient] = useState(null); // Inicializar como null
+  const [studient, setStudients] = useState(); 
   console.log(studient)
   const [treatments, setTreatments] = useState([])
   const { fetchDataBackend } = useFetch();
@@ -23,7 +23,7 @@ const Details = () => {
     try {
       const response = await fetchDataBackend(url, null, "GET", headers);
       console.log(response);
-      setStudient(response);
+      setStudients(response);
     } catch (error) {
       console.error("Error fetching student details:", error);
       // Manejar el error, mostrar un mensaje al usuario, etc.
@@ -37,9 +37,7 @@ const Details = () => {
     listStudients();
   }, []);
 
-  if (!studient) {
-    return <div>Cargando...</div>; // o un mensaje de error
-  }
+
 
   return (
     <>
@@ -58,22 +56,22 @@ const Details = () => {
               <ul className="pl-5">
                 <li className="text-md text-gray-00 mt-2">
                   <span className="text-gray-600 font-bold">
-                    Nombre: {studient.nombreEstudiante}
+                    Nombre: {studient?.nombreEstudiante}
                   </span>
                 </li>
                 <li className="text-md text-gray-00 mt-2">
                   <span className="text-gray-600 font-bold">
-                    Apellido: {studient.apellidoEstudiante}
+                    Apellido: {studient?.apellidoEstudiante}
                   </span>
                 </li>
                 <li className="text-md text-gray-00 mt-2">
                   <span className="text-gray-600 font-bold">
-                    Correo electrónico: {studient.emailEstudiante}
+                    Correo electrónico: {studient?.emailEstudiante}
                   </span>
                 </li>
                 <li className="text-md text-gray-00 mt-2">
                   <span className="text-gray-600 font-bold">
-                    Periodo: {studient.periodoEstudiante}
+                    Periodo: {studient?.periodoEstudiante}
                   </span>
                 </li>
               </ul>
@@ -84,17 +82,17 @@ const Details = () => {
               <ul className="pl-5">
                 <li className="text-md text-gray-00 mt-2">
                   <span className="text-gray-600 font-bold">
-                    Disciplina: {studient.tipoDeporte}
+                    Disciplina: {studient?.tipoDeporte}
                   </span>
                 </li>
                 <li className="text-md text-gray-00 mt-2">
                   <span className="text-gray-600 font-bold">
-                    Horario: {studient.horarioDeporte}
+                    Horario: {studient?.horarioDeporte}
                   </span>
                 </li>
                 <li className="text-md text-gray-00 mt-2">
                   <span className="text-gray-600 font-bold">
-                    Lugar: {studient.lugarDeporte}
+                    Lugar: {studient?.lugarDeporte}
                   </span>
                 </li>
                 <li className="text-md text-gray-00 mt-2">
@@ -105,7 +103,7 @@ const Details = () => {
                 </li>
                 <li className="text-md text-gray-00 mt-4">
                   <span className="text-gray-600 font-bold">
-                    Síntomas: {studient.descripcionDeporte}
+                    descripcion: {studient?.descripcionDeporte}
                   </span>
                 </li>
               </ul>
@@ -130,7 +128,7 @@ const Details = () => {
             Registrar
           </button>
 
-          {false && <ModalTreatments />}
+          {false & <ModalTreatments />}
         </div>
 
         {treatments.length === 0 ? (
