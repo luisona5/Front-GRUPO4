@@ -15,7 +15,7 @@ const Login = () => {
 
   const loginUser = async (data) => {
     try {
-      const url = data.password.includes("POLI")
+      const url = data.password.includes("ESFOT")
         ? `${import.meta.env.VITE_BACKEND_URL}/estudiante/login`
         : `${import.meta.env.VITE_BACKEND_URL}/login`;
 

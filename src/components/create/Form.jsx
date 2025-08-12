@@ -113,6 +113,7 @@ useEffect(() => {
                 carreraEstudiante: studient?.carreraEstudiante,
                 horarioDeporte: studient?.horarioDeporte,
                 descripcionDeporte: studient?.descripcionDeporte,
+                periodoEstudiante:studient?.periodoEstudiante,
                 tipoDeporte: studient?.tipoDeporte,
                 lugarDeporte: studient?.lugarDeporte
             })

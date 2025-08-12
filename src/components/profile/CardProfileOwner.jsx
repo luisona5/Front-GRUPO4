@@ -1,4 +1,8 @@
+import storeProfile from "../../context/storeProfile"
+
 export const CardProfileOwner = () => {
+
+    const {user} = storeProfile()
 
     return (
         <div className="bg-white border border-slate-200 h-auto p-4 
@@ -8,19 +12,22 @@ export const CardProfileOwner = () => {
                 <img src="https://cdn-icons-png.flaticon.com/512/4715/4715329.png" alt="img-client" className="m-auto " width={120} height={120} />
             </div>
             <div className="self-start">
-                <b>Nombre:</b><p className="inline-block ml-3"></p>
+                <b>Nombre del estudiante:</b><p className="inline-block ml-3">{user.nombreEstudiante}</p>
             </div >
             <div className="self-start">
-                <b>Cédula:</b><p className="inline-block ml-3"></p>
+                <b>Apellido del estudiante:</b><p className="inline-block ml-3">{user.apellidoEstudiante}</p>
             </div >
             <div className="self-start">
-                <b>Email:</b><p className="inline-block ml-3"></p>
+                <b>Email del estudiante:</b><p className="inline-block ml-3">{user.emailEstudiante}</p>
             </div>
             <div className="self-start">
-                <b>Celular:</b><p className="inline-block ml-3"></p>
+                <b>Celular del estudiante:</b><p className="inline-block ml-3">{user.celularEstudiante}</p>
             </div>
             <div className="self-start">
-                <b>Nombre de la mascota:</b><p className="inline-block ml-3"></p>
+                <b>Carrera</b><p className="inline-block ml-3">{user.carreraEstudiante}</p>
+            </div>
+            <div className="self-start">
+                <b>periodo:</b><p className="inline-block ml-3">{user.periodoEstudiante}</p>
             </div>
         </div>
     )
