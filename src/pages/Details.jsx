@@ -6,12 +6,12 @@ import useFetch from "../hooks/useFetch"
 
 const Details = () => {
   const { id } = useParams()
-  const [student, setStudent] = useState(null)
+  const [studient, setStudient] = useState(null)
   const [treatments, setTreatments] = useState([])
   const [modalVisible, setModalVisible] = useState(false)
   const { fetchDataBackend } = useFetch()
 
-  const listStudent = async () => {
+  const listStudient = async () => {
     const url = `${import.meta.env.VITE_BACKEND_URL}/estudiante/${id}`
     const storedUser = JSON.parse(localStorage.getItem("auth-token"))
     if (!storedUser?.state?.token) {
@@ -23,10 +23,9 @@ const Details = () => {
       Authorization: `Bearer ${storedUser.state.token}`
     }
     const response = await fetchDataBackend(url, null, "GET", headers)
-    setStudent(response)
+    setStudient(response)
 
-    // Si response tiene información de deportes, setear sports aquí (ejemplo):
-    // setSports(response.deportes || [])
+   
   }
 
   const formatDate = (date) => {
@@ -34,10 +33,10 @@ const Details = () => {
   }
 
   useEffect(() => {
-    listStudent()
+    listStudient()
   }, [id])
 
-  if (!student) {
+  if (!studient) {
     return <p>Cargando datos...</p>
   }
 
@@ -55,43 +54,43 @@ const Details = () => {
               <li className="text-md text-gray-00 mt-4 font-bold text-xl">Datos del dueño</li>
               <ul className="pl-5">
                 <li className="text-md text-gray-00 mt-2">
-                  <span className="text-gray-600 font-bold">Nombre: {student.nombreEstudiante}</span>
+                  <span className="text-gray-600 font-bold">Nombre: {studient.nombreEstudiante}</span>
                 </li>
                 <li className="text-md text-gray-00 mt-2">
-                  <span className="text-gray-600 font-bold">Apellido: {student.apellidoEstudiante}</span>
+                  <span className="text-gray-600 font-bold">Apellido: {studient.apellidoEstudiante}</span>
                 </li>
                 <li className="text-md text-gray-00 mt-2">
-                  <span className="text-gray-600 font-bold">Correo electrónico: {student.emailEstudiante}</span>
+                  <span className="text-gray-600 font-bold">Correo electrónico: {studient.emailEstudiante}</span>
                 </li>
                 <li className="text-md text-gray-00 mt-2">
-                  <span className="text-gray-600 font-bold">Periodo: {student.periodoEstudiante}</span>
+                  <span className="text-gray-600 font-bold">Periodo: {studient.periodoEstudiante}</span>
                 </li>
               </ul>
               <li className="text-md text-gray-00 mt-4 font-bold text-xl">Información de la Disciplina</li>
               <ul className="pl-5">
                 <li className="text-md text-gray-00 mt-2">
-                  <span className="text-gray-600 font-bold">Disciplina: {student.tipoDeporte}</span>
+                  <span className="text-gray-600 font-bold">Disciplina: {studient.tipoDeporte}</span>
                 </li>
                 <li className="text-md text-gray-00 mt-2">
-                  <span className="text-gray-600 font-bold">Horario: {student.horarioDeporte}</span>
+                  <span className="text-gray-600 font-bold">Horario: {studient.horarioDeporte}</span>
                 </li>
                 <li className="text-md text-gray-00 mt-2">
-                  <span className="text-gray-600 font-bold">Lugar: {student.lugarDeporte}</span>
+                  <span className="text-gray-600 font-bold">Lugar: {studient.lugarDeporte}</span>
                 </li>
                 <li className="text-md text-gray-00 mt-2">
                   <span className="text-gray-600 font-bold">Estado: </span>
                   <span className="bg-blue-100 text-green-500 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">
-                    {student.estado === "activo" ? "Activo" : "Inactivo"}
+                    {studient.estado === "activo" ? "Activo" : "Inactivo"}
                   </span>
                 </li>
                 <li className="text-md text-gray-00 mt-4">
-                  <span className="text-gray-600 font-bold">Indica talla: {student.descripcionDeporte}</span>
+                  <span className="text-gray-600 font-bold">Indica talla: {studient.descripcionDeporte}</span>
                 </li>
               </ul>
             </ul>
           </div>
           <div>
-            <img src={student.avatarCarrera || student.avatarCarreraIA} alt="avatar" className='h-80 w-80 rounded-full' />
+            <img src={studient.avatarCarrera || studient.avatarCarreraIA} alt="avatar" className='h-80 w-80 rounded-full' />
           </div>
         </div>
         <hr className='my-4 border-t-2 border-gray-300' />
