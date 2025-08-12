@@ -6,7 +6,7 @@ import useFetch from "../hooks/useFetch"
 
 const Details = () => {
     const { id } = useParams()
-    const [studient, setStudients] = useState({})
+    const [studient, setStudient] = useState({})
     const [treatments, setTreatments] = useState([])
     const { fetchDataBackend } = useFetch()
 
@@ -18,7 +18,8 @@ const Details = () => {
                 Authorization: `Bearer ${storedUser.state.token}`
         }
         const response = await fetchDataBackend(url, null, "GET", headers)
-        setStudients(response)
+        console.log(response)
+        setStudient(response)
     }
 
     
