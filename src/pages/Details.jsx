@@ -7,7 +7,7 @@ import useFetch from "../hooks/useFetch"
 const Details = () => {
   const { id } = useParams()
   const [student, setStudent] = useState(null)
-  const [sports, setSports] = useState([])
+  const [treatments, setTreatments] = useState([])
   const [modalVisible, setModalVisible] = useState(false)
   const { fetchDataBackend } = useFetch()
 
@@ -106,11 +106,11 @@ const Details = () => {
           {modalVisible && <ModalTreatments onClose={() => setModalVisible(false)} />}
         </div>
         {
-          sports.length === 0
+          treatments.length === 0
           ? <div className="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
               <span className="font-medium">No existen registros</span>
             </div>
-          : <TableTreatments Sport={sports} />
+          : <TableTreatments treatments={treatments} />
         }
       </div>
     </>
