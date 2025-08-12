@@ -25,12 +25,17 @@ const storeProfile = create((set) => ({
                     : "estudiante/perfil"
                 const url = `${import.meta.env.VITE_BACKEND_URL}/${endpoint}`;
 
+                
                 const respuesta = await axios.get(url, getAuthHeaders())
                 set({ user: respuesta.data })
             } catch (error) {
                 console.error(error)
             }
         },
+
+
+
+
         updateProfile:async(data,id)=>{
             try {
                 const url = `${import.meta.env.VITE_BACKEND_URL}/administrador/${id}`
