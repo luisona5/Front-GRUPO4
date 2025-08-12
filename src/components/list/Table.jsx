@@ -66,7 +66,7 @@ const Table = () => {
                                 />
 
                                 <MdInfo
-                                    title="Detalle"
+                                    title="Más información"
                                     className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-2 hover:text-green-600"
                                     onClick={() => navigate(`/dashboard/visualizar/${studient._id}`)}
                                 />

@@ -5,44 +5,32 @@ import { useParams } from "react-router"
 import useFetch from "../hooks/useFetch"
 
 const Details = () => {
-  const { id } = useParams()
-  const [studient, setStudient] = useState(null)
-  const [treatments, setTreatments] = useState([])
-  const [modalVisible, setModalVisible] = useState(false)
-  const { fetchDataBackend } = useFetch()
+    const { id } = useParams()
+    const [studient, setStudients] = useState({})
+    const [treatments, setTreatments] = useState([])
+    const { fetchDataBackend } = useFetch()
 
-  const listStudient = async () => {
-    const url = `${import.meta.env.VITE_BACKEND_URL}/estudiante/${id}`
-    const storedUser = JSON.parse(localStorage.getItem("auth-token"))
-    if (!storedUser?.state?.token) {
-      // Manejar falta de token, p.ej redirect o alerta
-      return
+    const listStudients = async () => {
+        const url = `${import.meta.env.VITE_BACKEND_URL}/estudiante/${id}`
+        const storedUser = JSON.parse(localStorage.getItem("auth-token"))
+        const headers= {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${storedUser.state.token}`
+        }
+        const response = await fetchDataBackend(url, null, "GET", headers)
+        setStudients(response)
     }
-    const headers= {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${storedUser.state.token}`
-    }
-    const response = await fetchDataBackend(url, null, "GET", headers)
-    setStudient(response)
 
-   
-  }
+    
 
-  const formatDate = (date) => {
-    return new Date(date).toLocaleDateString('es-EC', { dateStyle: 'long', timeZone: 'UTC' })
-  }
+    useEffect(() => {
+        listStudients()
+    }, [])
 
-  useEffect(() => {
-    listStudient()
-  }, [id])
 
-  if (!studient) {
-    return <p>Cargando datos...</p>
-  }
-
-  return (
-    <>
-      <div>
+    return (
+        <>
+            <div>
         <h1 className='font-black text-4xl text-gray-500'>Visualizar</h1>
         <hr className='my-4 border-t-2 border-gray-300' />
       </div>
@@ -51,69 +39,84 @@ const Details = () => {
         <div className='m-5 flex justify-between'>
           <div>
             <ul className="list-disc pl-5">
-              <li className="text-md text-gray-00 mt-4 font-bold text-xl">Datos del dueño</li>
+              <li className="text-md text-gray-00 mt-4 font-bold text-xl">Informacion del Estudiante</li>
               <ul className="pl-5">
                 <li className="text-md text-gray-00 mt-2">
-                  <span className="text-gray-600 font-bold">Nombre: {studient.nombreEstudiante}</span>
+                  <span className="text-gray-600 font-bold">Nombre: {studient?.nombreEstudiante}</span>
                 </li>
                 <li className="text-md text-gray-00 mt-2">
-                  <span className="text-gray-600 font-bold">Apellido: {studient.apellidoEstudiante}</span>
+                  <span className="text-gray-600 font-bold">Apellido: {studient?.apellidoEstudiante}</span>
                 </li>
                 <li className="text-md text-gray-00 mt-2">
-                  <span className="text-gray-600 font-bold">Correo electrónico: {studient.emailEstudiante}</span>
+                  <span className="text-gray-600 font-bold">Correo electrónico: {studient?.emailEstudiante}</span>
                 </li>
                 <li className="text-md text-gray-00 mt-2">
-                  <span className="text-gray-600 font-bold">Periodo: {studient.periodoEstudiante}</span>
+                  <span className="text-gray-600 font-bold">Periodo: {studient?.periodoEstudiante}</span>
                 </li>
               </ul>
-              <li className="text-md text-gray-00 mt-4 font-bold text-xl">Información de la Disciplina</li>
-              <ul className="pl-5">
-                <li className="text-md text-gray-00 mt-2">
-                  <span className="text-gray-600 font-bold">Disciplina: {studient.tipoDeporte}</span>
-                </li>
-                <li className="text-md text-gray-00 mt-2">
-                  <span className="text-gray-600 font-bold">Horario: {studient.horarioDeporte}</span>
-                </li>
-                <li className="text-md text-gray-00 mt-2">
-                  <span className="text-gray-600 font-bold">Lugar: {studient.lugarDeporte}</span>
-                </li>
-                <li className="text-md text-gray-00 mt-2">
-                  <span className="text-gray-600 font-bold">Estado: </span>
-                  <span className="bg-blue-100 text-green-500 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">
-                    {studient.estado === "activo" ? "Activo" : "Inactivo"}
-                  </span>
-                </li>
-                <li className="text-md text-gray-00 mt-4">
-                  <span className="text-gray-600 font-bold">Indica talla: {studient.descripcionDeporte}</span>
-                </li>
-              </ul>
-            </ul>
-          </div>
-          <div>
-            <img src={studient.avatarCarrera || studient.avatarCarreraIA} alt="avatar" className='h-80 w-80 rounded-full' />
-          </div>
-        </div>
-        <hr className='my-4 border-t-2 border-gray-300' />
-        <div className='flex justify-between items-center'>
-          <p>Este módulo te permite gestionar los tratamientos</p>
-          <button 
-            className="px-5 py-2 bg-green-800 text-white rounded-lg hover:bg-green-700" 
-            onClick={() => setModalVisible(true)}
-          >
-            Registrar
-          </button>
-          {modalVisible && <ModalTreatments onClose={() => setModalVisible(false)} />}
-        </div>
-        {
-          treatments.length === 0
-          ? <div className="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
-              <span className="font-medium">No existen registros</span>
+
+
+                            {/* Datos del dueño */}
+                            <li className="text-md text-gray-00 mt-4 font-bold text-xl">Informacion de la Disciplina</li>
+
+                            <ul className="pl-5">
+                                <li className="text-md text-gray-00 mt-2">
+                                    <span className="text-gray-600 font-bold">Disciplina: {studient?.tipoDeporte}</span>
+                                </li>
+                                <li className="text-md text-gray-00 mt-2">
+                                    <span className="text-gray-600 font-bold">Horario: {studient?.horarioDeporte}</span>
+                                </li>
+                                    <li className="text-md text-gray-00 mt-2">
+                                    <span className="text-gray-600 font-bold">Lugar: {studient?.lugarDeporte}</span>
+                                </li>
+
+                                <li className="text-md text-gray-00 mt-2">
+                                    <span className="text-gray-600 font-bold">Estado: </span>
+                                    <span className="bg-blue-100 text-green-500 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">
+                                    {studient && "activo"}
+                                    </span>
+                                </li>
+
+                                <li className="text-md text-gray-00 mt-4">
+                                    <span className="text-gray-600 font-bold">Síntomas: {studient?.descripcionDeporte}</span>
+                                </li>
+
+                            </ul>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <img src={studient?.avatarCarrera || studient?.avatarCarreraIA} alt="ball" className='h-80 w-80 rounded-full' />
+                    </div>
+                </div>
+
+                <hr className='my-4 border-t-2 border-gray-300' />
+
+                <div className='flex justify-between items-center'>
+
+                    <p>Este módulo te permite gestionar los tratamientos</p>
+
+                    <button className="px-5 py-2 bg-green-800 text-white rounded-lg hover:bg-green-700">
+                        Registrar
+                    </button>
+
+                    {false && (<ModalTreatments />)}
+
+                </div>
+
+                {
+                    treatments.length == 0
+                        ?
+                        <div className="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                            <span className="font-medium">No existen registros</span>
+                        </div>
+                        :
+                        <TableTreatments treatments={treatments} />
+                }
             </div>
-          : <TableTreatments treatments={treatments}  listStudient={listStudient}/>
-        }
-      </div>
-    </>
-  )
+        </>
+
+    )
 }
 
 export default Details
