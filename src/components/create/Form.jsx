@@ -44,25 +44,6 @@ export const Form = (studient) => {
 
 
    const registerStudient = async (data) => {
-
-    // Separar los datos del estudiante y del deporte
-    const studentData = {
-        nombreEstudiante: data.nombreEstudiante,
-        apellidoEstudiante: data.apellidoEstudiante,
-        celularEstudiante: data.celularEstudiante,
-        emailEstudiante: data.emailEstudiante,
-        carreraEstudiante: data.carreraEstudiante,
-        periodoEstudiante: data.periodoEstudiante,
-    };
-
-    const sportData = {
-        nombre: data.nombre,
-        lugar: data.lugar,
-        horario: data.horario,
-        descripcion: data.descripcion,
-    };
-
-       
     const imageOption = data.imageOption;
     const formData = new FormData();
 
@@ -106,70 +87,38 @@ export const Form = (studient) => {
         Authorization: `Bearer ${storedUser.state.token}`
     };
 
-    try{
-        
-     let response
+    let response
         if (studient?._id) {
             url = `${import.meta.env.VITE_BACKEND_URL}/estudiante/actualizar/${studient._id}`
-            response = await fetchDataBackend(url, formDataStudent, "PUT", headers)
+            response = await fetchDataBackend(url, formData, "PUT", headers)
         }
         else{
-            response = await fetchDataBackend(url, formDataStudent, "POST", headers)
+            response = await fetchDataBackend(url, formData, "POST", headers)
         }
         
         if (response) {
              setTimeout(() => {
             navigate("/dashboard/listar");
-             }, 2000);
+                }, 2000);
         }
-        
-};
-
-// Paso 2: Registrar el deporte
-        const sportFormData = new FormData();
-        Object.keys(sportData).forEach((key) => {
-            sportFormData.append(key, sportData[key]);
-        });
-        sportFormData.append("estudiante", studentId); // Agregamos el ID del estudiante para vincularlos
-
-        const sportResponse = await fetchDataBackend(
-            `${import.meta.env.VITE_BACKEND_URL}/deporte/registro`,
-            sportFormData,
-            "POST",
-            headers
-        );
-
-        if (sportResponse) {
-            toast.success("Estudiante y deporte registrados con éxito");
-            setTimeout(() => {
-                navigate("/dashboard/listar");
-            }, 2000);
-        } else {
-            throw new Error("Error al registrar el deporte");
-        }
-
-    } catch (error) {
-        console.error(error);
-        toast.error("Hubo un error en el registro. Inténtalo de nuevo.");
-    }
 };
 
 useEffect(() => {
-        if (studient) {
-            reset({
-                apellidoEstudiante: studient?.apellidoEstudiante,
-                nombreEstudiante: studient?.nombreEstudiante,
-                emailEstudiante: studient?.emailEstudiante,
-                celularEstudiante: studient?.celularEstudiante,
-                carreraEstudiante: studient?.carreraEstudiante,
-                horarioDeporte: studient?.horarioDeporte,
-                descripcionDeporte: studient?.descripcionDeporte,
-                periodoEstudiante:studient?.periodoEstudiante,
-                tipoDeporte: studient?.tipoDeporte,
-                lugarDeporte: studient?.lugarDeporte
-            })
-        }
-    }, [studient])
+        if (studient) {
+            reset({
+                apellidoEstudiante: studient?.apellidoEstudiante,
+                nombreEstudiante: studient?.nombreEstudiante,
+                emailEstudiante: studient?.emailEstudiante,
+                celularEstudiante: studient?.celularEstudiante,
+                carreraEstudiante: studient?.carreraEstudiante,
+                horarioDeporte: studient?.horarioDeporte,
+                descripcionDeporte: studient?.descripcionDeporte,
+                periodoEstudiante:studient?.periodoEstudiante,
+                tipoDeporte: studient?.tipoDeporte,
+                lugarDeporte: studient?.lugarDeporte
+            })
+        }
+    }, [])
 
 
     return (
@@ -298,7 +247,7 @@ useEffect(() => {
                         <option value="Voleyball">Voleyball</option>
                         
                     </select>
-                    {errors.nombre && <p className="text-red-800">{errors.nombre.message}</p>}
+                    {errors.tipoDeporte && <p className="text-red-800">{errors.tipoDeporte.message}</p>}
                 </div>
 
                 {/* Imagen de la disciplina*/}
@@ -320,6 +269,7 @@ useEffect(() => {
                             type="radio"
                             value="upload"
                             {...register("imageOption", { required: !studient && "El nombre de la mascota es obligatorio"})}
+                            disabled={studient}
                         />
                         Subir Imagen
                     </label>
@@ -378,7 +328,7 @@ useEffect(() => {
                         <option value="Estadio Politecnico">Estadio Politecnico</option>
                         <option value="Canchas">Canchas</option>
                     </select>
-                    {errors.lugar && <p className="text-red-800">{errors.lugar.message}</p>}
+                    {errors.lugarDeporte && <p className="text-red-800">{errors.lugarDeporte.message}</p>}
                 </div>
 
                 {/* Horario de entrenamiento */}
@@ -390,7 +340,7 @@ useEffect(() => {
                         className="block w-full rounded-md border border-gray-300 py-1 px-2 text-gray-500 mb-5"
                         {...register("horario", { required: "disponiblilidad para entrenar Obligatorio" })}
                     />
-                    {errors.horario && <p className="text-red-800">{errors.horario.message}</p>}
+                    {errors.horarioDeporte && <p className="text-red-800">{errors.horarioDeporte.message}</p>}
                 </div>
 
                 {/* Síntomas */}
@@ -401,7 +351,7 @@ useEffect(() => {
                         className="block w-full rounded-md border border-gray-300 py-1 px-2 text-gray-500 mb-5"
                         {...register("descripcion", { required: "campo es obligatorio" })}
                     />
-                    {errors.descripcion && <p className="text-red-800">{errors.descripcion.message}</p>}
+                    {errors.descripcionDeporte && <p className="text-red-800">{errors.descripcionDeporte.message}</p>}
                 </div>
             </fieldset>
 
@@ -410,7 +360,7 @@ useEffect(() => {
                 type="submit"
                 className="bg-gray-800 w-full p-2 mt-5 text-slate-300 uppercase font-bold rounded-lg 
                 hover:bg-gray-600 cursor-pointer transition-all"
-                value={studient ? "Registrar" : "Registrar"}
+                value={studient ? "Actualizar" : "Registrar"}
             />
         </form>
 
