@@ -269,7 +269,6 @@ useEffect(() => {
                             type="radio"
                             value="upload"
                             {...register("imageOption", { required: !studient && "El nombre de la mascota es obligatorio"})}
-                            disabled={studient}
                         />
                         Subir Imagen
                     </label>
