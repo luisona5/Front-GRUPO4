@@ -45,8 +45,8 @@ const Details = () => {
       <div>
         <h1 className='font-black text-4xl text-gray-500'>Visualizar</h1>
         <hr className='my-4 border-t-2 border-gray-300' />
-        <p className='mb-8'>Este módulo te permite visualizar todos los datos</p>
       </div>
+        <p className='mb-8'>Este módulo te permite visualizar todos los datos</p>
       <div>
         <div className='m-5 flex justify-between'>
           <div>
@@ -109,7 +109,7 @@ const Details = () => {
           ? <div className="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
               <span className="font-medium">No existen registros</span>
             </div>
-          : <TableTreatments treatments={treatments} />
+          : <TableTreatments treatments={treatments}  listStudient={listStudient}/>
         }
       </div>
     </>
