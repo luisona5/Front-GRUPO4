@@ -4,10 +4,9 @@ import { useEffect, useState } from "react";
 import { useNavigate } from 'react-router'
 import { ToastContainer } from "react-toastify"
 
-//import storeAuth from "../../context/storeAuth";
-
 
 const Table = () => {
+
 
     const navigate = useNavigate()
 

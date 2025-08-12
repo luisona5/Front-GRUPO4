@@ -4,6 +4,9 @@ import ModalTreatments from "../components/treatments/Modal";
 import { useParams } from "react-router";
 import useFetch from "../hooks/useFetch";
 
+
+
+
 const Details = () => {
   const { id } = useParams();
   console.log(id)

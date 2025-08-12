@@ -12,7 +12,6 @@ import { NotFound } from './pages/NotFound'
 import Dashboard from './layout/Dashboard'
 import Profile from './pages/Profile'
 import List from './pages/List'
-import Details from './pages/Details'
 import Create from './pages/Create'
 import Update from './pages/Update'
 
@@ -47,11 +46,11 @@ function App() {
             
             <Route element={<PublicRoute />}>
               <Route index element={<Home/>}/>
-              <Route path='login' element={<Login/>}/>
+              <Route path='/login' element={<Login/>}/>
               <Route path='register' element={<Register/>}/>
               <Route path='forgot/:id' element={<Forgot/>}/>
               <Route path='confirm/:token' element={<Confirm/>}/>
-              <Route path='reset/:token' element={<Reset/>}/>
+              <Route path='/reset/:token' element={<Reset/>}/>
               <Route path='*' element={<NotFound />} />
             </Route>
     
