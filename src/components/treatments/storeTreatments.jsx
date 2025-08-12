@@ -32,7 +32,7 @@ const storeTreatments = create(set=>({
     },
 
     deleteTreatments:async(id)=>{
-        const isConfirmed  = confirm("Vas a eliminar el tratamiento ¿Estás seguro de realizar esta acción?")
+        const isConfirmed  = confirm("Vas a eliminar el deporte ¿Estás seguro de realizar esta acción?")
         if (isConfirmed ) {
             try {
                 const url = `${import.meta.env.VITE_BACKEND_URL}/deportes/${id}`
