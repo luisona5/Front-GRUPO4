@@ -8,46 +8,34 @@ import exito from '../assets/reset.jpg'
 
 
 // CREANDO EL FORMULARIO
-
 const Reset = () => {
-
-    const {token}=  useParams()
-    const [tokenback, setTokenBack] = useState(false);
-    const {fetchDataBackend}= useFetch()
-
-    const {register, handleSubmit,formState:{errors}}=useForm()
-    const navigate= useNavigate()
+    const { fetchDataBackend } = useFetch()
+    const { token } = useParams()
+    const navigate = useNavigate();
+    const [tokenback, setTokenBack] = useState(false)
+    const { register, handleSubmit, formState: { errors } } = useForm();
 
 
-    const verifyToken=async ()=>{
-        const url=`${import.meta.env.VITE_BACKEND_URL}/recuperarpassword/${token}`
-        fetchDataBackend(url,null,'GET')    
-        setTokenBack(true)
-    }
 
-    const changePassword=(data)=>{
-        
-        const url =`${import.meta.env.VITE_BACKEND_URL}/nuevopassword/${token}`
-        fetchDataBackend(url,data,'POST')
-        
-
-        // para hacer una redireccion
-        setTimeout(()=>{
-            if(data.password == data.confirmpassword){
-             navigate('/login')
-            }
-           
-        },3000) // adentro de todo digo que es lo que se va a ejecutar
-    
+    const changePassword = (data) => {
+        const url = `${import.meta.env.VITE_BACKEND_URL}/nuevopassword/${token}`
+        fetchDataBackend(url, data,'POST')
+        setTimeout(() => {
+            navigate('/login')
+        }, 3000)
     }
 
     useEffect(() => {
-  
-      verifyToken()
+        const verifyToken = async()=>{
+            const url = `${import.meta.env.VITE_BACKEND_URL}/recuperarpassword/${token}`
+            fetchDataBackend(url, null,'GET')
+            setTokenBack(true)
+        }
+        verifyToken()
     }, [])
     
     
-    return (
+return (
         <div className="flex flex-col items-center justify-center h-screen bg-cover bg-center bg-no-repeat "
 
         style={{  backgroundImage: `linear-gradient(rgba(255, 251, 251, 0.21), rgba(246, 236, 236, 0.86)), url(${exito})` }}
