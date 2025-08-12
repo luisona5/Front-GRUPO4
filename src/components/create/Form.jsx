@@ -110,7 +110,6 @@ useEffect(() => {
                 nombreEstudiante: studient?.nombreEstudiante,
                 emailEstudiante: studient?.emailEstudiante,
                 celularEstudiante: studient?.celularEstudiante,
-                emailEstudiante:studient?. emailEstudiante,
                 carreraEstudiante: studient?.carreraEstudiante,
                 horarioDeporte: studient?.horarioDeporte,
                 descripcionDeporte: studient?.descripcionDeporte,
