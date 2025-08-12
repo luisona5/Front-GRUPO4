@@ -61,6 +61,7 @@ const Table = () => {
     return (
 
         <table className="w-full mt-5 table-auto shadow-lg bg-white">
+             <ToastContainer/>
             <thead className="bg-gray-800 text-slate-400">
                 <tr>
                     {["N°", "Nombre Estudiante", "Carrera", "Email", "Celular", "Estado", "Acciones"].map((header) => (
