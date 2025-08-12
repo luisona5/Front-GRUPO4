@@ -44,6 +44,25 @@ export const Form = (studient) => {
 
 
    const registerStudient = async (data) => {
+
+    // Separar los datos del estudiante y del deporte
+    const studentData = {
+        nombreEstudiante: data.nombreEstudiante,
+        apellidoEstudiante: data.apellidoEstudiante,
+        celularEstudiante: data.celularEstudiante,
+        emailEstudiante: data.emailEstudiante,
+        carreraEstudiante: data.carreraEstudiante,
+        periodoEstudiante: data.periodoEstudiante,
+    };
+
+    const sportData = {
+        nombre: data.nombre,
+        lugar: data.lugar,
+        horario: data.horario,
+        descripcion: data.descripcion,
+    };
+
+       
     const imageOption = data.imageOption;
     const formData = new FormData();
 
@@ -87,38 +106,70 @@ export const Form = (studient) => {
         Authorization: `Bearer ${storedUser.state.token}`
     };
 
-    let response
+    try{
+        
+     let response
         if (studient?._id) {
             url = `${import.meta.env.VITE_BACKEND_URL}/estudiante/actualizar/${studient._id}`
-            response = await fetchDataBackend(url, formData, "PUT", headers)
+            response = await fetchDataBackend(url, formDataStudent, "PUT", headers)
         }
         else{
-            response = await fetchDataBackend(url, formData, "POST", headers)
+            response = await fetchDataBackend(url, formDataStudent, "POST", headers)
         }
         
         if (response) {
              setTimeout(() => {
             navigate("/dashboard/listar");
-                }, 2000);
+             }, 2000);
         }
+        
+};
+
+// Paso 2: Registrar el deporte
+        const sportFormData = new FormData();
+        Object.keys(sportData).forEach((key) => {
+            sportFormData.append(key, sportData[key]);
+        });
+        sportFormData.append("estudiante", studentId); // Agregamos el ID del estudiante para vincularlos
+
+        const sportResponse = await fetchDataBackend(
+            `${import.meta.env.VITE_BACKEND_URL}/deporte/registro`,
+            sportFormData,
+            "POST",
+            headers
+        );
+
+        if (sportResponse) {
+            toast.success("Estudiante y deporte registrados con éxito");
+            setTimeout(() => {
+                navigate("/dashboard/listar");
+            }, 2000);
+        } else {
+            throw new Error("Error al registrar el deporte");
+        }
+
+    } catch (error) {
+        console.error(error);
+        toast.error("Hubo un error en el registro. Inténtalo de nuevo.");
+    }
 };
 
 useEffect(() => {
-        if (studient) {
-            reset({
-                apellidoEstudiante: studient?.apellidoEstudiante,
-                nombreEstudiante: studient?.nombreEstudiante,
-                emailEstudiante: studient?.emailEstudiante,
-                celularEstudiante: studient?.celularEstudiante,
-                carreraEstudiante: studient?.carreraEstudiante,
-                horarioDeporte: studient?.horarioDeporte,
-                descripcionDeporte: studient?.descripcionDeporte,
-                periodoEstudiante:studient?.periodoEstudiante,
-                tipoDeporte: studient?.tipoDeporte,
-                lugarDeporte: studient?.lugarDeporte
-            })
-        }
-    }, [])
+        if (studient) {
+            reset({
+                apellidoEstudiante: studient?.apellidoEstudiante,
+                nombreEstudiante: studient?.nombreEstudiante,
+                emailEstudiante: studient?.emailEstudiante,
+                celularEstudiante: studient?.celularEstudiante,
+                carreraEstudiante: studient?.carreraEstudiante,
+                horarioDeporte: studient?.horarioDeporte,
+                descripcionDeporte: studient?.descripcionDeporte,
+                periodoEstudiante:studient?.periodoEstudiante,
+                tipoDeporte: studient?.tipoDeporte,
+                lugarDeporte: studient?.lugarDeporte
+            })
+        }
+    }, [studient])
 
 
     return (
@@ -269,7 +320,6 @@ useEffect(() => {
                             type="radio"
                             value="upload"
                             {...register("imageOption", { required: !studient && "El nombre de la mascota es obligatorio"})}
-                            disabled={studient}
                         />
                         Subir Imagen
                     </label>
@@ -360,7 +410,7 @@ useEffect(() => {
                 type="submit"
                 className="bg-gray-800 w-full p-2 mt-5 text-slate-300 uppercase font-bold rounded-lg 
                 hover:bg-gray-600 cursor-pointer transition-all"
-                value={studient ? "Actualizar" : "Registrar"}
+                value={studient ? "Registrar" : "Registrar"}
             />
         </form>
 
