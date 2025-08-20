@@ -1,4 +1,3 @@
-import {portada} from './images/inicioDeporte.jpg'
 import { Link } from 'react-router-dom';
 
 export const Home = () => {
@@ -6,7 +5,7 @@ export const Home = () => {
         <>
             <div 
                 className="bg-fixed h-screen bg-cover bg-center"
-                style={{ backgroundImage: `url(${portada})` }}
+                style={{ backgroundImage: `url(./images/inicioDeporte.jpg)` }}
             ></div>
 
             <main className='text-center py-6 px-8 bg-blue-50 md:text-left md:flex justify-between items-center gap-10 md:py-1'>
