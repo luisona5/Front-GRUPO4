@@ -7,8 +7,15 @@ export const Home = () => {
     return (
         <>
             <div className='bg-url[./images/inicioDeporte.jpg] bg-fixed'></div>
+            <header>
+                esto es una prueba
+            </header>
         
-
+            <body>
+                <h1>
+                    ahora como le hacemos
+                </h1>
+            </body>
 
             <main className='text-center py-6 px-8 bg-blue-50  md:text-left md:flex justify-between items-center gap-10 md:py-1'>
                 
