@@ -1,4 +1,4 @@
-
+import portada from './images/inicioDeporte.jpg'
 import { Link } from 'react-router-dom';
 
 
@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 export const Home = () => {
     return (
         <>
-        
+            <div className='bg-url[./images/inicioDeporte.jpg] bg-fixed'></div>
         
 
 
@@ -20,16 +20,7 @@ export const Home = () => {
             </main>
 
 
-            <section className='container mx-auto px-4'>
-
-                <div className='container mx-auto relative mt-6'>
-                    <h2 className='font-semibold text-3xl relative z-1 w-50 text-center mx-auto bg-white'>ABOUT US</h2>
-                    <div className='text-amber-900 border-2 absolute top-1/2 w-full z-0' />
-                </div>
-
-                
-
-            </section>
+            
 
 
             
