@@ -1,4 +1,4 @@
-import portada from './images/inicioDeporte.jpg'
+//import portada from 'images/inicioDeporte.jpg'
 import { Link } from 'react-router-dom';
 
 
