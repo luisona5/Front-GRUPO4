@@ -5,7 +5,7 @@ export const Home = () => {
         <>
             <div 
                 className="bg-fixed h-screen bg-cover bg-center bg-blue-500"
-                style={{ backgroundImage: `url(./images/fondo2.jpg)` }}   
+                style={{ backgroundImage: `url(./images/deporte4.jpg)` }}   
             >
 
                 <main className='text-center py-6 px-8 bg-blue-50 md:text-left md:flex justify-between items-center gap-10 md:py-1'>
