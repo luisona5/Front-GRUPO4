@@ -4,7 +4,7 @@ export const Home = () => {
     return (
         <>
             <div 
-                className="bg-fixed  bg-center bg-size  bg-contain"
+                className="bg-fixed  bg-center   bg-contain h-screen w-screen"
                 style={{ backgroundImage: `url(./images/deporte4.jpg)` }}   
             >
 
